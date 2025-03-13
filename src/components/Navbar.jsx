@@ -7,11 +7,13 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { CgGitFork } from "react-icons/cg";
 import { ImBlog } from "react-icons/im";
+import pdf from "../Assets/resume.pdf"
 import {
   AiFillStar,
   AiOutlineHome,
   AiOutlineFundProjectionScreen,
   AiOutlineUser,
+  AiOutlineDownload,
 } from "react-icons/ai";
 
 import { CgFileDocument } from "react-icons/cg";
@@ -90,7 +92,7 @@ const NavBar = () => {
               >
                 <CgFileDocument style={{ marginBottom: "2px" }} /> Resume
               </Nav.Link>
-            </Nav.Item> */}
+            </Nav.Item>
 
             <Nav.Item>
               <Nav.Link
@@ -100,16 +102,16 @@ const NavBar = () => {
               >
                 <ImBlog style={{ marginBottom: "2px" }} /> Blogs
               </Nav.Link>
-            </Nav.Item>
+            </Nav.Item> */}
 
             <Nav.Item className="fork-btn">
               <Button
-                href="https://github.com/Blissmal"
+                href={pdf}
                 target="_blank"
                 className="fork-btn-inner"
               >
-                <CgGitFork style={{ fontSize: "1.2em" }} />{" "}
-                <AiFillStar style={{ fontSize: "1.1em" }} />
+                <AiOutlineDownload style={{ fontSize: "1.2em" }} />{" "}
+                Resume
               </Button>
             </Nav.Item>
           </Nav>
