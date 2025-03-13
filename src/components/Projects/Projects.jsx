@@ -47,7 +47,7 @@ const Projects = () => {
               title="React firebase chat"
               description="A react firebase chat application with signup and login functionalities using firebaseAuth and images upload to firebase firestore. The app allows seamless chatting including emoji and images transfer for more interactivity. It has block functionality where blocked users are not able to view the chat component of the user"
               ghLink="https://github.com/Blissmal/react-firebaseChat"
-              demoLink="https://react-firebase-chat-eight-delta.vercel.app/"
+              demoLink="https://bliss-firebase-chat.vercel.app"
             />
           </Col>
         </Row>
