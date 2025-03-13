@@ -8,6 +8,7 @@ import editor from "../../Assets/Projects/codeEditor.png";
 import chatify from "../../Assets/Projects/chatify.png";
 import suicide from "../../Assets/Projects/suicide.png";
 import bitsOfCode from "../../Assets/Projects/blog.png";
+import blisSocial from '../../Assets/Projects/bliss-socially.png'
 
 const Projects = () => {
   return (
@@ -20,15 +21,15 @@ const Projects = () => {
         <p style={{ color: "white" }}>
           Here are a few projects I've worked on recently.
         </p>
-        {/* <Row style={{ justifyContent: "center", paddingBottom: "10px" }}>
+        <Row style={{ justifyContent: "center", paddingBottom: "10px" }}>
           <Col md={4} className="project-card">
             <ProjectCard
-              imgPath={chatify}
+              imgPath={blisSocial}
               isBlog={false}
-              title="Chatify"
+              title="Bliss simple socially"
               description="Personal Chat Room or Workspace to share resources and hangout with friends build with react.js, Material-UI, and Firebase. Have features which allows user for realtime messaging, image sharing as well as supports reactions on messages."
-              ghLink="https://github.com/soumyajit4419/Chatify"
-              demoLink="https://chatify-49.web.app/"
+              ghLink="https://github.com/Blissmal/social-app"
+              demoLink="https://bls-social-app.vercel.app"
             />
           </Col>
 
@@ -43,7 +44,7 @@ const Projects = () => {
             />
           </Col>
 
-          <Col md={4} className="project-card">
+          {/* <Col md={4} className="project-card">
             <ProjectCard
               imgPath={editor}
               isBlog={false}
@@ -86,11 +87,11 @@ const Projects = () => {
               ghLink="https://github.com/soumyajit4419/Face_And_Emotion_Detection"
               // demoLink="https://blogs.soumya-jit.tech/"      <--------Please include a demo link here 
             />
-          </Col>
-        </Row> */}
-        <h1 className="project-heading">
+          </Col> */}
+        </Row>
+        {/* <h1 className="project-heading">
           <strong className="purple">Nothing to display 😖</strong>
-        </h1>
+        </h1> */}
       </Container>
     </Container>
   );
