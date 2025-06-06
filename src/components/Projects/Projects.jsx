@@ -23,7 +23,7 @@ const Projects = () => {
               imgPath={blisSocial}
               isBlog={false}
               title="Bliss simple socially"
-              description="Personal social media like app with clerk auth, uploadthing, neon posgres db, shadcn library and prisma orm. All these allows users create their accounts using google and manage their posts with or without images. THe app has notification component which displays user interactivity e.g post like, new comment and new follower."
+              description="A Next.js-based social app with Clerk auth, post creation/deletion by owners, and profile customization (bio, website and name). Profile image can be customized on clerk's profile management. Includes a chat listing all users (excluding the auth user) with dynamic usernames for 1-on-1 and group chats available on the chat SideBar."
               ghLink="https://github.com/Blissmal/social-app"
               demoLink="https://bls-social-app.vercel.app"
             />
