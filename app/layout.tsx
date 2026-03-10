@@ -17,14 +17,14 @@ export const metadata: Metadata = {
   keywords: ["portfolio", "react", "vite", "web development", "Bethuel Maluti", "blissmal", "full stack developer", "software engineering"],
   authors: [{ name: "Blissmal" }],
   creator: "Blissmal",
-  metadataBase: new URL("https://blissmal.me"),
+  metadataBase: new URL("https://portfolio.blissmal.store/"),
   icons: {
     icon: "/bliss.jpg",
   },
   openGraph: {
     title: "Blissmal | Portfolio",
     description: "👋 Hey there! I'm Bethuel Maluti — Software Engineering student and Full Stack Developer.",
-    url: "https://blissmal.me",
+    url: "https://portfolio.blissmal.store/",
     siteName: "Blissmal Portfolio",
     images: [
       {
