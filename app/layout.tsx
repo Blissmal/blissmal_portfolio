@@ -4,6 +4,8 @@ import "./globals.css";
 import Header from "@/components/Header";
 import PageTransition from "@/components/PageTransition";
 import StairTransition from "@/components/StairTransition";
+import AnimatedCursor from "@/components/AnimatedCursor";
+import ParticleBackground from "@/components/ParticleBackground";
 
 const JetBrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -26,12 +28,7 @@ export const metadata: Metadata = {
     description: "👋 Hey there! I'm Bethuel Maluti — Software Engineering student and Full Stack Developer.",
     url: "https://portfolio.blissmal.store/",
     siteName: "Blissmal Portfolio",
-    images: [
-      {
-        url: "/bliss.jpg",
-        alt: "Blissmal Portfolio",
-      },
-    ],
+    images: [{ url: "/bliss.jpg", alt: "Blissmal Portfolio" }],
     locale: "en_US",
     type: "website",
   },
@@ -49,10 +46,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${JetBrainsMono.variable} antialiased`}
-      >
+    <html lang="en" data-scroll-behavior="smooth">
+      <body className={`${JetBrainsMono.variable} antialiased`}>
+        {/* Global animated cursor — hidden on touch devices via CSS */}
+        <AnimatedCursor />
+        {/* Floating particle field */}
+        <ParticleBackground />
         <Header />
         <StairTransition />
         <PageTransition>
