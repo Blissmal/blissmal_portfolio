@@ -1,127 +1,227 @@
 "use client"
 
-import { motion } from "framer-motion"
 import Image from "next/image"
 import { useEffect, useRef } from "react"
 import gsap from "gsap"
 
 const Photo = () => {
-  const glowRef = useRef<HTMLDivElement>(null)
-  const orbitRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const frameRef = useRef<HTMLDivElement>(null)
+  const ring1Ref = useRef<SVGCircleElement>(null)
+  const ring2Ref = useRef<SVGSVGElement>(null)
+  const scanRef = useRef<HTMLDivElement>(null)
+  const badgeRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Pulsing glow ring
-      gsap.to(glowRef.current, {
-        boxShadow: "0 0 60px 20px rgba(0,255,153,0.25), 0 0 120px 40px rgba(0,255,153,0.1)",
-        scale: 1.04,
-        duration: 2.5,
+      // Entrance
+      gsap.fromTo(containerRef.current,
+        { opacity: 0, scale: 0.94, x: 20 },
+        { opacity: 1, scale: 1, x: 0, duration: 0.9, ease: "power3.out", delay: 1.6 }
+      )
+
+      // Slow outer ring rotation
+      gsap.to(ring2Ref.current, {
+        rotation: 360,
+        duration: 22,
+        repeat: -1,
+        ease: "none",
+        transformOrigin: "center center",
+      })
+
+      // Scanline sweep — subtle top-to-bottom
+      gsap.to(scanRef.current, {
+        y: "100%",
+        duration: 3.5,
+        repeat: -1,
+        ease: "none",
+        delay: 2,
+      })
+
+      // Badge pulse
+      gsap.to(badgeRef.current, {
+        opacity: 0.6,
+        duration: 1.8,
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut",
+        delay: 2.4,
       })
 
-      // Orbit dots spinning
-      if (orbitRef.current) {
-        const dots = orbitRef.current.querySelectorAll(".orbit-dot")
-        dots.forEach((dot, i) => {
-          const angle = (i / dots.length) * Math.PI * 2
-          const radius = 140
-          gsap.to(dot, {
-            motionPath: {
-              path: `M ${radius * Math.cos(angle)} ${radius * Math.sin(angle)}`,
-              autoRotate: true,
-            },
-            duration: 8 + i * 1.5,
-            repeat: -1,
-            ease: "none",
-          })
+      // Subtle hover parallax on frame
+      const el = frameRef.current
+      if (!el) return
+      const onMove = (e: MouseEvent) => {
+        const rect = el.getBoundingClientRect()
+        const cx = rect.left + rect.width / 2
+        const cy = rect.top + rect.height / 2
+        const dx = (e.clientX - cx) / rect.width
+        const dy = (e.clientY - cy) / rect.height
+        gsap.to(el, {
+          rotateY: dx * 6,
+          rotateX: -dy * 6,
+          duration: 0.6,
+          ease: "power2.out",
+          transformPerspective: 800,
         })
-
-        // Simple CSS rotation fallback for orbit ring
-        gsap.to(".orbit-ring-1", { rotation: 360, duration: 12, repeat: -1, ease: "none", transformOrigin: "center" })
-        gsap.to(".orbit-ring-2", { rotation: -360, duration: 18, repeat: -1, ease: "none", transformOrigin: "center" })
       }
-    })
+      const onLeave = () => {
+        gsap.to(el, {
+          rotateY: 0, rotateX: 0,
+          duration: 0.8,
+          ease: "elastic.out(1, 0.4)",
+        })
+      }
+      el.addEventListener("mousemove", onMove)
+      el.addEventListener("mouseleave", onLeave)
+      return () => {
+        el.removeEventListener("mousemove", onMove)
+        el.removeEventListener("mouseleave", onLeave)
+      }
+    }, containerRef)
+
     return () => ctx.revert()
   }, [])
 
   return (
-    <div className="w-full h-full relative flex items-center justify-center">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1, transition: { delay: 1.8, duration: 0.7, ease: "easeOut" } }}
-        className="relative"
-      >
-        {/* Outer orbit rings */}
-        <div ref={orbitRef} className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          {/* Ring 1 */}
-          <svg
-            className="orbit-ring-1 absolute w-85 h-85 xl:w-140 xl:h-140"
-            viewBox="0 0 560 560"
-            fill="none"
-          >
-            <circle cx="280" cy="280" r="270" stroke="rgba(0,255,153,0.15)" strokeWidth="1" strokeDasharray="6 16" />
-            <circle cx="280" cy="10" r="5" fill="#00ff99" className="drop-shadow-[0_0_6px_#00ff99]" />
-          </svg>
-          {/* Ring 2 */}
-          <svg
-            className="orbit-ring-2 absolute w-72.5 h-72.5 xl:w-120 xl:h-120"
-            viewBox="0 0 480 480"
-            fill="none"
-          >
-            <circle cx="240" cy="240" r="230" stroke="rgba(0,255,153,0.08)" strokeWidth="1" strokeDasharray="3 20" />
-            <circle cx="240" cy="10" r="3" fill="rgba(0,255,153,0.7)" />
-          </svg>
-        </div>
+    <div
+      ref={containerRef}
+      className="relative flex items-center justify-center opacity-0"
+      style={{ width: '425px', height: '475px' }} // Scaled up 25%
+    >
 
-        {/* Glow backing */}
+      {/* Rotating outer ring SVG */}
+      <svg
+        ref={ring2Ref}
+        className="absolute pointer-events-none"
+        width="475"
+        height="475"
+        viewBox="0 0 380 380"
+        fill="none"
+        style={{ transformOrigin: 'center' }}
+      >
+        <circle
+          cx="190" cy="190" r="184"
+          stroke="rgba(0,255,153,0.12)"
+          strokeWidth="0.75"
+          strokeDasharray="5 18"
+        />
+        {/* Orbiting dot */}
+        <circle cx="190" cy="6" r="3" fill="#00ff99" opacity="0.8" />
+        <circle cx="374" cy="190" r="2" fill="#00ff99" opacity="0.35" />
+      </svg>
+
+      {/* Static inner ring */}
+      <svg
+        className="absolute pointer-events-none"
+        width="375"
+        height="375"
+        viewBox="0 0 300 300"
+        fill="none"
+      >
+        <circle
+          ref={ring1Ref}
+          cx="150" cy="150" r="146"
+          stroke="rgba(0,255,153,0.06)"
+          strokeWidth="0.75"
+        />
+      </svg>
+
+      {/* Main photo frame with tilt */}
+      <div
+        ref={frameRef}
+        className="relative overflow-hidden"
+        style={{
+          width: '300px',
+          height: '350px',
+          transformStyle: 'preserve-3d',
+        }}
+      >
+        {/* Corner brackets */}
+        {(['tl','tr','bl','br'] as const).map((pos) => (
+          <div
+            key={pos}
+            className="absolute w-5 h-5 z-20 pointer-events-none"
+            style={{
+              top: pos.startsWith('t') ? 0 : 'auto',
+              bottom: pos.startsWith('b') ? 0 : 'auto',
+              left: pos.endsWith('l') ? 0 : 'auto',
+              right: pos.endsWith('r') ? 0 : 'auto',
+              borderColor: '#00ff99',
+              borderStyle: 'solid',
+              borderWidth: `${pos.startsWith('t') ? '1px' : '0'} ${pos.endsWith('r') ? '1px' : '0'} ${pos.startsWith('b') ? '1px' : '0'} ${pos.endsWith('l') ? '1px' : '0'}`,
+            }}
+          />
+        ))}
+
+        {/* Outer frame border */}
         <div
-          ref={glowRef}
-          className="absolute inset-0 rounded-full"
-          style={{ boxShadow: "0 0 40px 10px rgba(0,255,153,0.15)" }}
+          className="absolute inset-0 z-10 pointer-events-none"
+          style={{ border: '0.5px solid rgba(255,255,255,0.08)' }}
+        />
+
+        {/* Scanline sweep overlay */}
+        <div
+          ref={scanRef}
+          className="absolute left-0 right-0 z-10 pointer-events-none"
+          style={{
+            top: '-20%',
+            height: '20%',
+            background: 'linear-gradient(to bottom, transparent, rgba(0,255,153,0.04), transparent)',
+            transform: 'translateY(-100%)',
+          }}
         />
 
         {/* Photo */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { delay: 2.2, duration: 0.5 } }}
-          className="w-74.5 h-74.5 xl:w-124.5 xl:h-124.5 mix-blend-lighten relative"
+        <div
+          className="relative w-full h-full mix-blend-lighten"
+          style={{ background: '#0a0a0a' }}
         >
           <Image
             src="/assets/avatar.svg"
             priority
             quality={100}
-            alt="Blissmal Photo"
+            alt="Bethuel Maluti"
             fill
             className="object-contain"
           />
-        </motion.div>
+        </div>
+      </div>
 
-        {/* SVG spinning dashed circle */}
-        <motion.svg
-          className="absolute inset-0 w-full h-full"
-          fill="transparent"
-          viewBox="0 0 506 506"
-          xmlns="http://www.w3.org/2000/svg"
+      {/* Floating "Available" badge — bottom left of frame */}
+      <div
+        ref={badgeRef}
+        className="absolute z-30"
+        style={{
+          bottom: '60px',
+          left: '20px',
+          background: '#0a0a0a',
+          border: '0.5px solid rgba(255,255,255,0.08)',
+          padding: '8px 12px',
+        }}
+      >
+        <span
+          className="block text-[10px] tracking-[2px] uppercase font-mono"
+          style={{ color: 'rgba(255,255,255,0.28)' }}
         >
-          <motion.circle
-            cx="253"
-            cy="253"
-            r="250"
-            stroke="#00FF99"
-            strokeWidth="4"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            initial={{ strokeDasharray: "24 10 0 0" }}
-            animate={{
-              strokeDasharray: ["15 120 25 25", "16 25 92 72", "4 250 22 22"],
-              rotate: [120, 360],
-            }}
-            transition={{ duration: 20, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
+          Status
+        </span>
+        <div className="flex items-center gap-1.5 mt-1">
+          <span
+            className="w-1.5 h-1.5 rounded-full"
+            style={{ background: '#00ff99', boxShadow: '0 0 5px #00ff99' }}
           />
-        </motion.svg>
-      </motion.div>
+          <span className="text-[13px] font-medium text-accent">Available</span>
+        </div>
+      </div>
+
+      {/* Decorative coordinate label — top right */}
+      <div
+        className="absolute top-8 right-0 z-20 pointer-events-none"
+        style={{ color: 'rgba(255,255,255,0.15)', fontSize: '10px', letterSpacing: '2px', fontFamily: 'monospace' }}
+      >
+        BM.2026
+      </div>
     </div>
   )
 }
