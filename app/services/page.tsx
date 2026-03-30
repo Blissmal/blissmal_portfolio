@@ -1,7 +1,5 @@
 "use client"
-import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { BsArrowDownRight } from 'react-icons/bs'
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -9,10 +7,34 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 const services = [
-  { num: '01', title: 'Web Development', desc: 'Building responsive and modern web applications with cutting-edge tools and frameworks.', href: "" },
-  { num: '02', title: 'Mobile App Development', desc: 'Creating user-friendly mobile applications for iOS and Android.', href: "" },
-  { num: '03', title: 'UI/UX Design', desc: 'Designing intuitive and engaging user interfaces and experiences.', href: "" },
-  { num: '04', title: 'AI/ML', desc: 'Developing intelligent solutions using machine learning models and AI algorithms for data analysis and automation.', href: '' }
+  {
+    num: '01',
+    tag: 'Core service',
+    title: 'Web Development',
+    desc: 'Building responsive and modern web applications with cutting-edge tools and frameworks. End-to-end, from architecture to deploy.',
+    href: '',
+  },
+  {
+    num: '02',
+    tag: 'Core service',
+    title: 'Mobile App Development',
+    desc: 'Creating user-friendly mobile applications for iOS and Android. Native feel, cross-platform efficiency.',
+    href: '',
+  },
+  {
+    num: '03',
+    tag: 'Design',
+    title: 'UI/UX Design',
+    desc: 'Designing intuitive and engaging user interfaces and experiences. Every interaction considered, every pixel intentional.',
+    href: '',
+  },
+  {
+    num: '04',
+    tag: 'Emerging tech',
+    title: 'AI / ML',
+    desc: 'Developing intelligent solutions using machine learning models and AI algorithms for data analysis and automation.',
+    href: '',
+  },
 ]
 
 const Services = () => {
@@ -20,78 +42,141 @@ const Services = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-    const timer = setTimeout(() => {
-      gsap.from(".service-card", {
+      gsap.from('.service-card', {
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 80%",
+          start: 'top 85%',
           once: true,
         },
-        y: 60,
+        y: 40,
         opacity: 0,
-        stagger: 0.15,
-        duration: 0.8,
-        ease: "power3.out",
+        stagger: 0.1,
+        duration: 0.7,
+        ease: 'power3.out',
       })
-      ScrollTrigger.refresh()
-    }, 100)
 
-    return () => clearTimeout(timer)
-  }, sectionRef)
-    return () => ctx.revert()
+      gsap.from('.services-header', {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 90%',
+          once: true,
+        },
+        y: 24,
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power3.out',
+      })
+    }, sectionRef)
+
+    // Critical: force ScrollTrigger to recalculate after client-side nav
+    const t = setTimeout(() => ScrollTrigger.refresh(), 100)
+
+    return () => {
+      clearTimeout(t)
+      ctx.revert()
+    }
   }, [])
 
   return (
-    <section ref={sectionRef} className='min-h-[80vh] flex flex-col justify-center py-12 xl:py-0 relative z-10'>
-      <div className="container mx-auto">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { delay: 2.4, duration: 0.4, ease: "easeIn" } }}
-          className='grid grid-cols-1 md:grid-cols-2 gap-[60px]'
-        >
-          {services.map((service, index) => (
-            <div
-              key={index}
-              className='service-card flex-1 flex flex-col justify-center gap-6 group relative overflow-hidden rounded-lg p-1'
+    <section
+      ref={sectionRef}
+      className="min-h-screen flex flex-col justify-center py-16 xl:py-24 relative z-10"
+    >
+      <div className="container mx-auto px-6 xl:px-12 max-w-6xl">
+
+        {/* Header */}
+        <div className="services-header flex items-end justify-between border-b border-white/[0.06] pb-8 mb-16 gap-8">
+          <h1
+            className="text-[64px] xl:text-[88px] leading-none tracking-widest uppercase"
+            style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+          >
+            What I<br />
+            <span className="text-accent">Build</span>
+          </h1>
+          <p className="text-sm text-white/40 text-right max-w-[200px] leading-relaxed hidden md:block font-light">
+            Crafting precise digital experiences — from code to pixel to algorithm.
+          </p>
+        </div>
+
+        {/* Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 border border-white/[0.06] divide-y divide-white/[0.06] md:divide-y-0">
+          {services.map((service, i) => (
+            <Link
+              key={i}
+              href={service.href || '#'}
+              className={`
+                service-card group relative overflow-hidden bg-[#111111]
+                p-10 xl:p-12 flex flex-col cursor-pointer
+                transition-colors duration-300 hover:bg-[#141414]
+                ${i % 2 === 0 ? 'md:border-r border-white/[0.06]' : ''}
+                ${i < 2 ? 'md:border-b border-white/[0.06]' : ''}
+              `}
             >
-              {/* Animated border shimmer */}
-              <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              {/* Subtle green glow on hover */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                 style={{
-                  background: "linear-gradient(90deg, transparent 0%, rgba(0,255,153,0.1) 50%, transparent 100%)",
-                  backgroundSize: "200% 100%",
-                  animation: "shimmer 2s infinite",
+                  background: 'linear-gradient(135deg, rgba(0,255,153,0.04) 0%, transparent 60%)'
                 }}
               />
 
-              <div className='w-full flex justify-between items-center'>
-                <div className='text-5xl font-extrabold text-outline text-transparent group-hover:text-outline-hover transition-all duration-500'>
-                  {service.num}
-                </div>
-                <Link
-                  href={service.href}
-                  className='w-[70px] h-[70px] rounded-full bg-white group-hover:bg-accent transition-all duration-500 flex justify-center items-center hover:-rotate-45 shadow-lg group-hover:shadow-[0_0_20px_rgba(0,255,153,0.5)]'
-                >
-                  <BsArrowDownRight className='text-primary text-3xl' />
-                </Link>
-              </div>
-              <h2 className='text-[42px] font-bold leading-none text-white group-hover:text-accent transition-all duration-500'>
+              {/* Large background number */}
+              <span
+                className="absolute top-[-12px] right-6 text-[130px] leading-none select-none pointer-events-none transition-colors duration-500"
+                style={{
+                  fontFamily: "'Bebas Neue', sans-serif",
+                  color: '#1a1a1a',
+                }}
+              >
+                {service.num}
+              </span>
+
+              {/* Tag */}
+              <span className="text-[10px] tracking-[3px] uppercase text-white/30 group-hover:text-accent transition-colors duration-400 mb-5">
+                {service.tag}
+              </span>
+
+              {/* Accent bar */}
+              <div className="h-[2px] bg-accent mb-6 w-8 group-hover:w-14 transition-all duration-400" />
+
+              {/* Title */}
+              <h2
+                className="text-4xl xl:text-5xl leading-tight mb-4 text-white group-hover:text-accent transition-colors duration-400 max-w-[260px]"
+                style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: '1px' }}
+              >
                 {service.title}
               </h2>
-              <p className='text-white/60 group-hover:text-white/80 transition-colors duration-300'>
+
+              {/* Description */}
+              <p className="text-sm leading-relaxed text-white/40 group-hover:text-white/60 transition-colors duration-300 font-light max-w-[300px] flex-1">
                 {service.desc}
               </p>
-              <div className='border-b border-white/20 w-full group-hover:border-accent/40 transition-colors duration-500' />
-            </div>
-          ))}
-        </motion.div>
-      </div>
 
-      <style>{`
-        @keyframes shimmer {
-          0% { background-position: -200% 0; }
-          100% { background-position: 200% 0; }
-        }
-      `}</style>
+              {/* Footer */}
+              <div className="mt-8 pt-5 border-t border-white/[0.06] group-hover:border-accent/20 transition-colors duration-400 flex items-center justify-between">
+                <span className="text-[10px] tracking-[2px] uppercase text-white/20 group-hover:text-accent transition-colors duration-400">
+                  View work
+                </span>
+                <div className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-accent group-hover:border-accent group-hover:-rotate-45 transition-all duration-400">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="stroke-white/30 group-hover:stroke-black transition-colors duration-400"
+                  >
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+      </div>
     </section>
   )
 }
