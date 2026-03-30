@@ -36,9 +36,6 @@ const AnimatedCursor = () => {
   const svgRef = useRef<SVGSVGElement>(null)
   const rafRef = useRef<number>(0)
 
-  document.body.style.cursor = "none"
-
-
 
   useEffect(() => {
     const wrapper = wrapperRef.current
