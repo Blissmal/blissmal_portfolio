@@ -68,7 +68,6 @@ const Services = () => {
       })
     }, sectionRef)
 
-    // Critical: force ScrollTrigger to recalculate after client-side nav
     const t = setTimeout(() => ScrollTrigger.refresh(), 100)
 
     return () => {
