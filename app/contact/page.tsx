@@ -133,6 +133,7 @@ const Contact = () => {
               <Button
                 size="md"
                 className="max-w-40 relative overflow-hidden group/send"
+                type="submit"
                 onClick={handleSend}
               >
                 <span className="relative z-10 group-hover/send:text-primary transition-colors duration-300">Send message</span>
