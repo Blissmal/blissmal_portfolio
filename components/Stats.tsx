@@ -1,80 +1,100 @@
 "use client"
 import CountUp from "react-countup"
-import { useEffect, useRef } from "react"
-import gsap from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-
-gsap.registerPlugin(ScrollTrigger)
+import { useEffect, useRef, useState } from "react"
+import { useInView } from "framer-motion"
 
 const stats = [
-  { num: 5, text: "Years of\nExperience" },
-  { num: 10, text: "Projects\nCompleted" },
-  { num: 8, text: "Technologies\nMastered" },
-  { num: 1200, text: "Code\nCommits" },
+  { num: 5,    suffix: "+", label: "Years of",     sub: "Experience"  },
+  { num: 10,   suffix: "+", label: "Projects",     sub: "Completed"   },
+  { num: 8,    suffix: "+", label: "Technologies", sub: "Mastered"    },
+  { num: 1200, suffix: "+", label: "Code",         sub: "Commits"     },
 ]
 
 const Stats = () => {
-  const sectionRef = useRef<HTMLElement>(null)
+  const ref = useRef<HTMLElement>(null)
+  const isInView = useInView(ref, { once: true, margin: "-10% 0px" })
+  const [triggered, setTriggered] = useState(false)
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(".stat-item", {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 90%",
-          once: true,
-        },
-        y: 24,
-        opacity: 0,
-        stagger: 0.1,
-        duration: 0.6,
-        ease: "power3.out",
-      })
-    }, sectionRef)
-    return () => ctx.revert()
-  }, [])
+    if (isInView) setTriggered(true)
+  }, [isInView])
 
   return (
-    <section ref={sectionRef} className="relative z-10 mt-16 xl:mt-20">
-      {/* Full-width border top */}
-      <div className="border-t border-white/[0.06]">
-        <div className="container mx-auto px-6 xl:px-12 max-w-6xl">
-          <div className="grid grid-cols-2 xl:grid-cols-4">
-            {stats.map((stat, index) => (
-              <div
-                key={index}
-                className={`stat-item group py-8 px-6 xl:px-8 flex flex-col gap-1 transition-all duration-300
-                  ${index < stats.length - 1 ? "border-r border-white/[0.06]" : ""}
-                  hover:bg-white/[0.02]
-                `}
-              >
-                {/* Number row */}
-                <div className="flex items-end gap-0.5">
+    <section ref={ref} className="relative z-10 mt-16 xl:mt-24">
+      {/* Thin top rule with accent glow at center */}
+      <div className="relative h-px w-full">
+        <div className="absolute inset-0 bg-white/[0.06]" />
+        <div className="absolute left-1/2 -translate-x-1/2 h-px w-48
+          bg-gradient-to-r from-transparent via-accent/60 to-transparent" />
+      </div>
+
+      <div className="container mx-auto px-6 xl:px-12 max-w-6xl">
+        <div className="grid grid-cols-2 xl:grid-cols-4">
+          {stats.map((stat, i) => (
+            <div
+              key={i}
+              className={[
+                "group relative py-10 px-6 xl:px-8 flex flex-col gap-0 overflow-hidden",
+                "transition-all duration-500 hover:bg-white/[0.025]",
+                i < stats.length - 1 ? "border-r border-white/[0.06]" : "",
+                // Staggered slide-up via inline delay
+              ].join(" ")}
+              style={{
+                opacity: triggered ? 1 : 0,
+                transform: triggered ? "translateY(0)" : "translateY(28px)",
+                transition: `opacity 0.6s ease ${i * 0.1}s, transform 0.6s ease ${i * 0.1}s`,
+              }}
+            >
+              {/* Accent corner bracket — top left */}
+              <span className="absolute top-4 left-4 w-3 h-3 border-l border-t border-accent/20
+                group-hover:border-accent/60 transition-colors duration-500" />
+
+              {/* Number */}
+              <div className="flex items-end gap-0 leading-none mb-2">
+                {triggered && (
                   <CountUp
                     end={stat.num}
-                    duration={4}
-                    delay={2}
-                    className="text-[42px] xl:text-[52px] font-black leading-none text-white group-hover:text-accent transition-colors duration-500"
+                    duration={2.8}
+                    delay={i * 0.15}
+                    className="text-[48px] xl:text-[60px] font-black leading-none text-white
+                      group-hover:text-accent transition-colors duration-500"
                     style={{ fontFamily: "'Bebas Neue', sans-serif" }}
                   />
-                  <span
-                    className="text-[42px] xl:text-[52px] font-black leading-none text-accent"
-                    style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-                  >
-                    +
-                  </span>
-                </div>
-                {/* Label */}
-                <p className="text-[10px] tracking-[2px] uppercase text-white/30 leading-relaxed whitespace-pre-line group-hover:text-white/50 transition-colors duration-300">
-                  {stat.text}
-                </p>
-                {/* Accent tick on hover */}
-                <div className="h-[1px] w-0 bg-accent group-hover:w-8 transition-all duration-500 mt-2" />
+                )}
+                <span
+                  className="text-[48px] xl:text-[60px] font-black leading-none text-accent pb-0"
+                  style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                >
+                  {stat.suffix}
+                </span>
               </div>
-            ))}
-          </div>
+
+              {/* Label — two-line stacked */}
+              <p className="text-[9px] tracking-[3px] uppercase text-white/25
+                group-hover:text-white/45 transition-colors duration-300 leading-[1.8]">
+                {stat.label}<br />
+                <span className="text-accent/50 group-hover:text-accent/80
+                  transition-colors duration-300">{stat.sub}</span>
+              </p>
+
+              {/* Animated underline */}
+              <div className="mt-4 h-[1px] w-0 bg-gradient-to-r from-accent to-accent/20
+                group-hover:w-10 transition-all duration-500 ease-out" />
+
+              {/* Subtle radial glow on hover */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100
+                transition-opacity duration-700 pointer-events-none"
+                style={{
+                  background: "radial-gradient(ellipse at 30% 50%, rgba(0,255,153,0.04) 0%, transparent 70%)"
+                }}
+              />
+            </div>
+          ))}
         </div>
       </div>
+
+      {/* Bottom rule */}
+      <div className="h-px bg-white/[0.04] mt-0" />
     </section>
   )
 }
