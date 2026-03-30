@@ -20,15 +20,24 @@ const Services = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+    const timer = setTimeout(() => {
       gsap.from(".service-card", {
-        scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          once: true,
+        },
         y: 60,
         opacity: 0,
         stagger: 0.15,
         duration: 0.8,
         ease: "power3.out",
       })
-    }, sectionRef)
+      ScrollTrigger.refresh()
+    }, 100)
+
+    return () => clearTimeout(timer)
+  }, sectionRef)
     return () => ctx.revert()
   }, [])
 
