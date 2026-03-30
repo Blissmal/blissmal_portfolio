@@ -7,7 +7,7 @@ const stats = [
   { num: 5,    suffix: "+", label: "Years of",     sub: "Experience"  },
   { num: 10,   suffix: "+", label: "Projects",     sub: "Completed"   },
   { num: 8,    suffix: "+", label: "Technologies", sub: "Mastered"    },
-  { num: 1200, suffix: "+", label: "Code",         sub: "Commits"     },
+  { num: 1500, suffix: "+", label: "Code",         sub: "Commits"     },
 ]
 
 const Stats = () => {

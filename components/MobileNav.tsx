@@ -50,9 +50,9 @@ const MobileNav = () => {
                 <SheetTrigger className="flex justify-center items-center hover:text-accent transition-colors duration-300 group">
                     <CiMenuFries className="text-[32px] text-accent group-hover:scale-110 transition-transform duration-300" />
                 </SheetTrigger>
-                <SheetContent className="flex flex-col bg-[#1a1a1f] border-l border-white/[0.06] p-0">
+                <SheetContent className="flex flex-col bg-[#1a1a1f] border-l border-white/6 p-0">
                     {/* Logo section */}
-                    <div ref={contentRef} className="mobile-logo mt-8 px-6 py-10 border-b border-white/[0.06]">
+                    <div ref={contentRef} className="mobile-logo mt-8 px-6 py-10 border-b border-white/6">
                         <Link href="/" className="group block">
                             <h1 className="text-4xl font-semibold tracking-wider group-hover:text-accent transition-colors duration-300"
                                 style={{ fontFamily: "'Bebas Neue', sans-serif" }}
@@ -90,7 +90,7 @@ const MobileNav = () => {
 
                                         {/* Hover underline */}
                                         {!isActive && (
-                                            <span className="absolute bottom-2 left-4 h-[1px] w-0 bg-accent/60 group-hover:w-[calc(100%-2rem)] transition-all duration-300" />
+                                            <span className="absolute bottom-2 left-4 h-px w-0 bg-accent/60 group-hover:w-[calc(100%-2rem)] transition-all duration-300" />
                                         )}
                                     </Link>
                                 </SheetClose>
@@ -99,7 +99,7 @@ const MobileNav = () => {
                     </nav>
 
                     {/* Footer info */}
-                    <div className="px-6 py-8 border-t border-white/[0.06] space-y-3">
+                    <div className="px-6 py-8 border-t border-white/6 space-y-3">
                         <p className="text-xs tracking-[2px] uppercase text-white/30">Contact</p>
                         <a 
                             href="mailto:malutibethuel@gmail.com"
