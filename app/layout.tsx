@@ -6,6 +6,7 @@ import PageTransition from "@/components/PageTransition";
 import StairTransition from "@/components/StairTransition";
 import AnimatedCursor from "@/components/AnimatedCursor";
 import ParticleBackground from "@/components/ParticleBackground";
+import { Toaster } from "@/components/ui/sonner";
 
 const JetBrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -56,6 +57,7 @@ export default function RootLayout({
         <StairTransition />
         <PageTransition>
           {children}
+          <Toaster />
         </PageTransition>
       </body>
     </html>

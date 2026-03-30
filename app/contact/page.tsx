@@ -11,6 +11,7 @@ import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { resend } from "@/lib/resend"
 import { sendContactEmail } from "@/lib/contact"
+import { toast } from "sonner"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -59,10 +60,10 @@ const Contact = () => {
     const result = await sendContactEmail(formData);
     
     if (result.success) {
-      console.log("Email sent successfully!");
+      toast.success("Message sent successfully!");
       formRef.current?.reset();
     } else {
-      console.error("Failed to send.");
+      toast.error("Failed to send message.");
     }
   }
 
