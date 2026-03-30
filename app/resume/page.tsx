@@ -358,11 +358,10 @@ const Resume = () => {
               <button
                 key={tab.value}
                 onClick={() => setActiveTab(tab.value)}
-                className={`text-xs tracking-[3px] uppercase relative pb-5 transition-all duration-300 ${
-                  activeTab === tab.value
+                className={`text-xs tracking-[3px] uppercase relative pb-5 transition-all duration-300 ${activeTab === tab.value
                     ? "text-accent"
                     : "text-white/40 hover:text-white/70"
-                }`}
+                  }`}
               >
                 {tab.label}
                 {activeTab === tab.value && (

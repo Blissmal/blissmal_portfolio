@@ -95,7 +95,7 @@ const Home = () => {
                 ref={indexRef}
                 className="text-[10px] tracking-[3px] text-white/20 uppercase rotate-90 origin-center whitespace-nowrap mt-4 opacity-0"
               >
-                Portfolio 2025
+                Portfolio 2026
               </div>
             </div>
 
