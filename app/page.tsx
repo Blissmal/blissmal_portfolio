@@ -5,6 +5,7 @@ import Stats from "@/components/Stats"
 import { FiDownload } from "react-icons/fi"
 import { useEffect, useRef } from "react"
 import gsap from "gsap"
+import Link from "next/link"
 
 const Home = () => {
   const heroRef = useRef<HTMLDivElement>(null)
@@ -23,31 +24,31 @@ const Home = () => {
         { scaleY: 0, transformOrigin: 'top center' },
         { scaleY: 1, duration: 1, ease: 'power3.inOut', delay: 0.3 }
       )
-      .fromTo(subtitleRef.current,
-        { opacity: 0, x: -20, letterSpacing: '0.3em' },
-        { opacity: 1, x: 0, letterSpacing: '0.15em', duration: 0.7 },
-        '-=0.5'
-      )
-      .fromTo(h1Ref.current?.querySelectorAll('.line-word') ?? [],
-        { opacity: 0, y: 56, skewY: 3 },
-        { opacity: 1, y: 0, skewY: 0, stagger: 0.09, duration: 0.85 },
-        '-=0.45'
-      )
-      .fromTo(paraRef.current,
-        { opacity: 0, y: 14 },
-        { opacity: 1, y: 0, duration: 0.6 },
-        '-=0.5'
-      )
-      .fromTo(actionsRef.current,
-        { opacity: 0, y: 14 },
-        { opacity: 1, y: 0, duration: 0.5 },
-        '-=0.4'
-      )
-      .fromTo(indexRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.6 },
-        '-=0.3'
-      )
+        .fromTo(subtitleRef.current,
+          { opacity: 0, x: -20, letterSpacing: '0.3em' },
+          { opacity: 1, x: 0, letterSpacing: '0.15em', duration: 0.7 },
+          '-=0.5'
+        )
+        .fromTo(h1Ref.current?.querySelectorAll('.line-word') ?? [],
+          { opacity: 0, y: 56, skewY: 3 },
+          { opacity: 1, y: 0, skewY: 0, stagger: 0.09, duration: 0.85 },
+          '-=0.45'
+        )
+        .fromTo(paraRef.current,
+          { opacity: 0, y: 14 },
+          { opacity: 1, y: 0, duration: 0.6 },
+          '-=0.5'
+        )
+        .fromTo(actionsRef.current,
+          { opacity: 0, y: 14 },
+          { opacity: 1, y: 0, duration: 0.5 },
+          '-=0.4'
+        )
+        .fromTo(indexRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.6 },
+          '-=0.3'
+        )
 
       // Blinking cursor
       if (subtitleRef.current) {
@@ -142,10 +143,11 @@ const Home = () => {
               >
                 {/* CV button */}
                 <button className="group relative px-10 py-4 overflow-hidden uppercase tracking-[2px] text-xs font-medium border border-accent text-accent transition-all duration-300 hover:text-black">
-                  <span className="relative z-10 flex items-center gap-3">
-                    Download CV
-                    <FiDownload className="text-base group-hover:translate-y-0.5 transition-transform duration-300" />
-                  </span>
+                  <Link href="assets/resume/bethuelsResume.pdf" target="_blank" download>
+                    <span className="relative z-10 flex items-center gap-3">
+                      Download CV
+                      <FiDownload className="text-base group-hover:translate-y-0.5 transition-transform duration-300" />
+                    </span></Link>
                   <span className="absolute inset-0 bg-accent translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
                 </button>
 
