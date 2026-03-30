@@ -1,184 +1,341 @@
-"use client";
+"use client"
+import Link from 'next/link'
+import { BsArrowUpRight, BsGithub } from 'react-icons/bs'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import Image from 'next/image'
+import { useState, useEffect, useRef, useCallback } from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Keyboard } from 'swiper/modules'
+import SwiperCore from 'swiper'
+import 'swiper/css'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-import { motion } from "framer-motion";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import { BsArrowUpRight, BsGithub } from "react-icons/bs"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import Link from "next/link";
-import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
-import SwiperCore from "swiper";
-import WorkSliderButtons from "@/components/WorkSliderButtons";
-import gsap from "gsap";
+gsap.registerPlugin(ScrollTrigger)
 
 const projects = [
   {
     num: '01',
-    category: 'full stack',
-    title: 'Bliss simple socially',
+    category: 'Full Stack',
+    title: 'Bliss Simple Socially',
     description: 'A social app with authentication, post management, profile customization, and real-time chat features.',
     stack: [{ name: 'Next.js' }, { name: 'Clerk' }, { name: 'React' }],
     image: '/assets/work/bliss-socially.png',
-    live: "https://bls-social-app.vercel.app",
-    github: "https://github.com/Blissmal/social-app"
+    live: 'https://bls-social-app.vercel.app',
+    github: 'https://github.com/Blissmal/social-app',
   },
   {
     num: '02',
-    category: 'full stack',
-    title: 'FB Like social app',
+    category: 'Full Stack',
+    title: 'FB Like Social App',
     description: 'A Facebook-inspired social platform with authentication, image uploads, and database integration.',
     stack: [{ name: 'Next.js' }, { name: 'Clerk' }, { name: 'PostgreSQL' }, { name: 'Cloudinary' }],
     image: '/assets/work/bliss-social.png',
-    live: "https://bliss-social.vercel.app",
-    github: "https://github.com/Blissmal/next-social-media-app"
+    live: 'https://bliss-social.vercel.app',
+    github: 'https://github.com/Blissmal/next-social-media-app',
   },
   {
     num: '03',
-    category: 'frontend',
-    title: 'React firebase chat',
+    category: 'Frontend',
+    title: 'React Firebase Chat',
     description: 'A real-time chat application with authentication, emoji support, image sharing, and user blocking.',
     stack: [{ name: 'React' }, { name: 'Firebase' }, { name: 'Firestore' }],
     image: '/assets/work/firebaseChat.png',
-    live: "https://bliss-firebase-chat.vercel.app",
-    github: "https://github.com/Blissmal/react-firebaseChat"
+    live: 'https://bliss-firebase-chat.vercel.app',
+    github: 'https://github.com/Blissmal/react-firebaseChat',
   },
   {
     num: '04',
-    category: 'full stack',
+    category: 'Full Stack',
     title: 'Ecommerce Application',
     description: 'A modern e-commerce platform with product variants, cart management, M-Pesa integration, and admin dashboard.',
-    stack: [{ name: 'Next.js' }, { name: 'TypeScript' }, { name: 'M-Pesa API' }, { name: 'Neon postgresql' }],
+    stack: [{ name: 'Next.js' }, { name: 'TypeScript' }, { name: 'M-Pesa API' }, { name: 'Neon PostgreSQL' }],
     image: '/assets/work/ecommerce.png',
-    live: "https://bls-ecommerce-site.vercel.app",
-    github: "#"
+    live: 'https://bls-ecommerce-site.vercel.app',
+    github: '#',
   },
   {
     num: '05',
-    category: 'full stack',
+    category: 'Full Stack',
     title: 'Hire Purchase Ecommerce',
     description: 'A smartphone e-commerce platform with flexible hire purchase financing for the Kenyan market.',
     stack: [{ name: 'Next.js' }, { name: 'TypeScript' }, { name: 'Payment Integration' }],
     image: '/assets/work/HP-purchase.png',
-    live: "https://lipa-phone.vercel.app",
-    github: "#"
-  }
-];
+    live: 'https://lipa-phone.vercel.app',
+    github: '#',
+  },
+]
 
 const Work = () => {
   const [project, setProject] = useState(projects[0])
-  const infoRef = useRef<HTMLDivElement>(null)
+  const [activeIndex, setActiveIndex] = useState(0)
+  const swiperRef = useRef<SwiperCore | null>(null)
+  const sectionRef = useRef<HTMLElement>(null)
+  const infoPanelRef = useRef<HTMLDivElement>(null)
   const numRef = useRef<HTMLDivElement>(null)
+  const stackRef = useRef<HTMLUListElement>(null)
 
-  const handleSlideChange = (swiper: SwiperCore) => {
-    const currentIndex = swiper.activeIndex;
-    setProject(projects[currentIndex])
+  // Animate info panel whenever project changes
+  useEffect(() => {
+    const tl = gsap.timeline()
 
-    // Animate info panel on slide change
-    if (infoRef.current) {
-      gsap.fromTo(infoRef.current,
-        { opacity: 0, x: -20 },
-        { opacity: 1, x: 0, duration: 0.5, ease: "power2.out" }
+    if (infoPanelRef.current) {
+      tl.fromTo(infoPanelRef.current,
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out' }
       )
     }
     if (numRef.current) {
-      gsap.fromTo(numRef.current,
-        { scale: 0.7, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }
+      tl.fromTo(numRef.current,
+        { scale: 0.75, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.35, ease: 'back.out(2)' },
+        '<'
       )
     }
-  }
+    if (stackRef.current) {
+      const tags = stackRef.current.querySelectorAll('li')
+      tl.fromTo(tags,
+        { opacity: 0, y: 8 },
+        { opacity: 1, y: 0, stagger: 0.07, duration: 0.3, ease: 'power2.out' },
+        '-=0.2'
+      )
+    }
 
-  useEffect(() => {
-    // Animate stack tags on project change
-    const tags = document.querySelectorAll(".stack-tag")
-    gsap.fromTo(tags,
-      { opacity: 0, y: 10 },
-      { opacity: 1, y: 0, stagger: 0.08, duration: 0.4, ease: "power2.out" }
-    )
+    return () => { tl.kill() }
   }, [project])
 
+  // Page entrance — fixed with ScrollTrigger.refresh()
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.work-entrance', {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 85%',
+          once: true,
+        },
+        y: 40,
+        opacity: 0,
+        stagger: 0.12,
+        duration: 0.7,
+        ease: 'power3.out',
+      })
+    }, sectionRef)
+
+    const t = setTimeout(() => ScrollTrigger.refresh(), 100)
+
+    return () => {
+      clearTimeout(t)
+      ctx.revert()
+    }
+  }, [])
+
+  const handleSlideChange = useCallback((swiper: SwiperCore) => {
+    const idx = swiper.activeIndex
+    setActiveIndex(idx)
+    setProject(projects[idx])
+  }, [])
+
+  const goTo = (idx: number) => {
+    swiperRef.current?.slideTo(idx)
+  }
+
   return (
-    <motion.section
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1, transition: { delay: 2.4, duration: 0.4, ease: 'easeIn' } }}
-      className="min-h-[80vh] flex flex-col justify-center py-12 xl:py-0 relative z-10"
+    <section
+      ref={sectionRef}
+      className="min-h-screen flex flex-col justify-center py-16 xl:py-24 relative z-10"
     >
-      <div className="container mx-auto">
-        <div className="flex flex-col xl:flex-row xl:gap-[30px]">
-          <div ref={infoRef} className="w-full xl:w-[50%] xl:h-[460px] flex flex-col xl:justify-between order-2 xl:order-0">
-            <div className="flex flex-col gap-[30px] h-[50%]">
-              <div ref={numRef} className="text-8xl leading-none font-extrabold text-transparent text-outline">
+      <div className="container mx-auto px-6 xl:px-12 max-w-6xl">
+
+        {/* Header */}
+        <div className="work-entrance flex items-end justify-between border-b border-white/[0.06] pb-8 mb-14 gap-8">
+          <h1
+            className="text-[60px] xl:text-[80px] leading-none tracking-widest uppercase"
+            style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+          >
+            Selected<br />
+            <span className="text-accent">Work</span>
+          </h1>
+          <span className="text-xs tracking-[3px] uppercase text-white/25 hidden md:block">
+            {project.num} / 0{projects.length}
+          </span>
+        </div>
+
+        {/* Main layout */}
+        <div className="work-entrance grid grid-cols-1 xl:grid-cols-2 border border-white/[0.06] min-h-[460px]">
+
+          {/* Info panel */}
+          <div
+            ref={infoPanelRef}
+            className="flex flex-col justify-between p-10 xl:p-12 border-b xl:border-b-0 xl:border-r border-white/[0.06] order-2 xl:order-1"
+          >
+            <div>
+              {/* Number */}
+              <div
+                ref={numRef}
+                className="text-[100px] leading-none select-none"
+                style={{
+                  fontFamily: "'Bebas Neue', sans-serif",
+                  color: '#181818',
+                }}
+              >
                 {project.num}
               </div>
-              <h2 className="text-[42px] font-bold leading-none text-white group-hover:text-accent transition-all duration-500 capitalize">
-                {project.category} project
-              </h2>
-              <p className="text-white/60">{project.description}</p>
 
-              <ul className="flex gap-4 flex-wrap">
-                {project.stack.map((stack, index) => (
-                  <li key={index} className="stack-tag text-xl text-accent bg-accent/10 px-3 py-1 rounded-full text-sm border border-accent/20">
-                    {stack.name}
+              {/* Category */}
+              <p className="text-[10px] tracking-[3px] uppercase text-white/30 mb-3">
+                {project.category} project
+              </p>
+
+              {/* Title */}
+              <h2
+                className="text-[32px] xl:text-[38px] leading-tight mb-4 text-white"
+                style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: '1px' }}
+              >
+                {project.title}
+              </h2>
+
+              {/* Description */}
+              <p className="text-sm leading-relaxed text-white/50 font-light max-w-sm">
+                {project.description}
+              </p>
+
+              {/* Stack */}
+              <ul ref={stackRef} className="flex flex-wrap gap-2 mt-5 mb-6">
+                {project.stack.map((s, i) => (
+                  <li
+                    key={i}
+                    className="text-[10px] tracking-[1.5px] uppercase text-accent bg-accent/[0.07] border border-accent/20 px-3 py-1"
+                    style={{ borderRadius: '2px' }}
+                  >
+                    {s.name}
                   </li>
                 ))}
               </ul>
-              <div className="border border-white/20" />
+            </div>
+
+            <div>
+              <div className="h-px bg-white/[0.06] mb-6" />
               <div className="flex items-center gap-4">
-                <Link href={project.live}>
-                  <TooltipProvider delayDuration={100}>
-                    <Tooltip>
-                      <TooltipTrigger className="w-[70px] h-[70px] rounded-full bg-white/5 flex justify-center items-center group hover:bg-accent/20 hover:shadow-[0_0_20px_rgba(0,255,153,0.3)] transition-all duration-300">
-                        <BsArrowUpRight className="text-white text-3xl group-hover:text-accent group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
-                      </TooltipTrigger>
-                      <TooltipContent><p>Live project</p></TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </Link>
-                <Link href={project.github}>
-                  <TooltipProvider delayDuration={100}>
-                    <Tooltip>
-                      <TooltipTrigger className="w-[70px] h-[70px] rounded-full bg-white/5 flex justify-center items-center group hover:bg-accent/20 hover:shadow-[0_0_20px_rgba(0,255,153,0.3)] transition-all duration-300">
-                        <BsGithub className="text-white text-3xl group-hover:text-accent group-hover:rotate-12 transition-transform duration-300" />
-                      </TooltipTrigger>
-                      <TooltipContent><p>Github repository</p></TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </Link>
+                <TooltipProvider delayDuration={100}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Link
+                        href={project.live}
+                        target="_blank"
+                        className="w-[52px] h-[52px] rounded-full border border-white/10 bg-transparent flex items-center justify-center transition-all duration-300 hover:bg-accent hover:border-accent group"
+                      >
+                        <BsArrowUpRight className="text-white/40 text-lg group-hover:text-black group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all" />
+                      </Link>
+                    </TooltipTrigger>
+                    <TooltipContent><p>Live project</p></TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+
+                <TooltipProvider delayDuration={100}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Link
+                        href={project.github}
+                        target="_blank"
+                        className="w-[52px] h-[52px] rounded-full border border-white/10 bg-transparent flex items-center justify-center transition-all duration-300 hover:bg-accent hover:border-accent group"
+                      >
+                        <BsGithub className="text-white/40 text-lg group-hover:text-black group-hover:rotate-12 transition-all duration-300" />
+                      </Link>
+                    </TooltipTrigger>
+                    <TooltipContent><p>GitHub repository</p></TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+
+                <span className="text-[10px] tracking-[2px] uppercase text-white/20">
+                  View project
+                </span>
               </div>
             </div>
           </div>
 
-          <div className="w-full xl:w-[50%]">
-            <Swiper spaceBetween={30} slidesPerView={1} className="xl:h-[520px] mb-12" onSlideChange={handleSlideChange}>
-              {projects.map((project, index) => (
-                <SwiperSlide key={index} className="w-full">
-                  <div className="h-[460px] relative group flex justify-center items-center bg-pink-50/20 overflow-hidden rounded-xl">
-                    <div className="absolute inset-0 bg-black/20 z-10 group-hover:bg-black/10 transition-colors duration-300" />
-                    {/* Glitch overlay on hover */}
-                    <div className="absolute inset-0 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+          {/* Image / Swiper panel */}
+          <div className="order-1 xl:order-2 min-h-[320px] xl:min-h-0 relative">
+            <Swiper
+              modules={[Keyboard]}
+              keyboard={{ enabled: true }}
+              spaceBetween={0}
+              slidesPerView={1}
+              onSwiper={(s) => { swiperRef.current = s }}
+              onSlideChange={handleSlideChange}
+              className="w-full h-full min-h-[320px] xl:min-h-[460px]"
+            >
+              {projects.map((p, i) => (
+                <SwiperSlide key={i}>
+                  <div className="relative w-full h-full min-h-[320px] xl:min-h-[460px] overflow-hidden bg-[#111] group">
+                    {/* Scanlines overlay on hover */}
+                    <div
+                      className="absolute inset-0 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                       style={{
-                        background: "linear-gradient(transparent 49%, rgba(0,255,153,0.03) 50%, transparent 51%)",
-                        backgroundSize: "100% 4px",
+                        background: 'repeating-linear-gradient(transparent, transparent 3px, rgba(0,255,153,0.015) 3px, rgba(0,255,153,0.015) 4px)',
                       }}
                     />
-                    <div className="relative w-full h-full">
-                      <Image src={project.image} fill className="object-cover group-hover:scale-105 transition-transform duration-700" alt={project.title} />
-                    </div>
+                    <div className="absolute inset-0 bg-black/20 z-10 group-hover:bg-black/10 transition-colors duration-400" />
+                    <Image
+                      src={p.image}
+                      fill
+                      alt={p.title}
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    {/* Category label */}
+                    <span className="absolute top-5 left-5 z-30 text-[10px] tracking-[3px] uppercase text-white/35">
+                      {p.category}
+                    </span>
                   </div>
                 </SwiperSlide>
               ))}
-              <WorkSliderButtons
-                containerStyles="flex gap-2 absolute right-0 bottom-[calc(50%_-_22px)] xl:bottom-0 z-20 w-full justify-between xl:w-max xl:justify-none"
-                btnStyles="bg-accent hover:bg-accent-hover text-primary text-[22px] w-[44px] h-[44px] flex justify-center items-center transition-all hover:shadow-[0_0_15px_rgba(0,255,153,0.5)] hover:scale-110"
-                iconStyles=""
-              />
             </Swiper>
           </div>
         </div>
-      </div>
-    </motion.section>
-  );
-};
 
-export default Work;
+        {/* Nav bar */}
+        <div className="work-entrance flex items-center justify-between border border-t-0 border-white/[0.06] px-8 py-5">
+          {/* Dot indicators */}
+          <div className="flex gap-2 items-center">
+            {projects.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => goTo(i)}
+                className="h-[2px] rounded-[1px] transition-all duration-300 cursor-pointer"
+                style={{
+                  width: i === activeIndex ? '40px' : '24px',
+                  background: i === activeIndex ? '#00FF99' : '#2a2a2a',
+                }}
+                aria-label={`Go to project ${i + 1}`}
+              />
+            ))}
+          </div>
+
+          {/* Arrow buttons */}
+          <div className="flex gap-3">
+            <button
+              onClick={() => goTo(activeIndex - 1)}
+              disabled={activeIndex === 0}
+              className="w-10 h-10 rounded-full border border-white/10 bg-transparent flex items-center justify-center transition-all duration-300 hover:bg-accent hover:border-accent group disabled:opacity-20 disabled:cursor-not-allowed"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="stroke-white/40 group-hover:stroke-black transition-colors">
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
+            </button>
+            <button
+              onClick={() => goTo(activeIndex + 1)}
+              disabled={activeIndex === projects.length - 1}
+              className="w-10 h-10 rounded-full border border-white/10 bg-transparent flex items-center justify-center transition-all duration-300 hover:bg-accent hover:border-accent group disabled:opacity-20 disabled:cursor-not-allowed"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="stroke-white/40 group-hover:stroke-black transition-colors">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  )
+}
+
+export default Work

@@ -104,9 +104,9 @@ const Services = () => {
               key={i}
               href={service.href || '#'}
               className={`
-                service-card group relative overflow-hidden bg-[#111111]
+                service-card group relative overflow-hidden
                 p-10 xl:p-12 flex flex-col cursor-pointer
-                transition-colors duration-300 hover:bg-[#141414]
+                transition-colors duration-300
                 ${i % 2 === 0 ? 'md:border-r border-white/[0.06]' : ''}
                 ${i < 2 ? 'md:border-b border-white/[0.06]' : ''}
               `}
