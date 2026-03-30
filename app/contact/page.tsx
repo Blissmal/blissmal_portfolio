@@ -9,6 +9,8 @@ import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa'
 import { useEffect, useRef } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { resend } from "@/lib/resend"
+import { sendContactEmail } from "@/lib/contact"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -53,6 +55,18 @@ const Contact = () => {
     gsap.fromTo(btn, { scale: 0.95 }, { scale: 1, duration: 0.3, ease: "elastic.out(1.5, 0.5)" })
   }
 
+  const handleContact = async (formData: FormData) => {
+    const result = await sendContactEmail(formData);
+    
+    if (result.success) {
+      console.log("Email sent successfully!");
+      formRef.current?.reset();
+    } else {
+      console.error("Failed to send.");
+    }
+  }
+
+
   return (
     <motion.section
       ref={sectionRef}
@@ -63,7 +77,7 @@ const Contact = () => {
       <div className="container mx-auto">
         <div className="flex flex-col xl:flex-row gap-7.5">
           <div className="xl:w-[54%] order-2 xl:order-0">
-            <form ref={formRef} className="flex flex-col gap-6 p-10 bg-[#27272c] rounded-xl relative overflow-hidden">
+            <form ref={formRef} action={handleContact} className="flex flex-col gap-6 p-10 bg-[#27272c] rounded-xl relative overflow-hidden">
               {/* Animated gradient border */}
               <div className="absolute inset-0 rounded-xl opacity-30 pointer-events-none"
                 style={{
@@ -82,6 +96,7 @@ const Contact = () => {
                   <div key={i} className="form-field">
                     <Input
                       placeholder={placeholder}
+                      name={placeholder.toLowerCase().replace(/\s/g, "-")}
                       type={placeholder.includes("Email") ? "email" : "text"}
                       className="transition-all duration-300 focus:shadow-[0_0_0_2px_rgba(0,255,153,0.3)] focus:border-accent"
                     />
@@ -90,7 +105,7 @@ const Contact = () => {
               </div>
 
               <div className="form-field">
-                <Select>
+                <Select name="service">
                   <SelectTrigger className="w-full focus:shadow-[0_0_0_2px_rgba(0,255,153,0.3)]">
                     <SelectValue placeholder="Select a service" />
                   </SelectTrigger>
@@ -110,6 +125,7 @@ const Contact = () => {
                 <Textarea
                   className="h-50 transition-all duration-300 focus:shadow-[0_0_0_2px_rgba(0,255,153,0.3)] focus:border-accent"
                   placeholder="Type your message here."
+                  name="message"
                 />
               </div>
 
