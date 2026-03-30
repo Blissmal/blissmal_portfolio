@@ -172,10 +172,11 @@ const Work = () => {
               {/* Number */}
               <div
                 ref={numRef}
-                className="text-[100px] leading-none select-none"
+                className="text-[108px] leading-none select-none -mt-3 mb-0"
                 style={{
                   fontFamily: "'Bebas Neue', sans-serif",
-                  color: '#181818',
+                  WebkitTextStroke: '1px rgba(255,255,255,0.05)',
+                  color: 'transparent',
                 }}
               >
                 {project.num}

@@ -11,7 +11,7 @@ export async function sendContactEmail(formData: FormData) {
 
   try {
     await resend.emails.send({
-      from: `${name} <onboarding@resend.dev>`, // Replace with your verified domain in production
+      from: `${name} <onboarding@resend.dev>`,
       to: "malutibethuel@gmail.com",
       subject: `New contact form submission from ${name}`,
       html: `
