@@ -1,12 +1,12 @@
 "use client";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { motion } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FaHtml5, FaCss3, FaJs, FaReact, FaNodeJs, FaPython, FaJava, FaCloud } from "react-icons/fa";
 import { SiTailwindcss, SiNextdotjs, SiPostgresql, SiMysql, SiAndroid, SiGit, SiCplusplus, SiVitess } from "react-icons/si";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const about = {
   title: "About me",
@@ -23,7 +23,6 @@ const about = {
 };
 
 const experience = {
-  icon: "/assets/resume/badge.svg",
   title: "My experience",
   description: "Throughout my career, I've gained hands-on experience in full-stack development and IT operations. From freelance projects to corporate internships, I've developed a strong foundation in building scalable applications and solving complex technical challenges.",
   items: [
@@ -33,7 +32,6 @@ const experience = {
 };
 
 const education = {
-  icon: "/assets/resume/cap.svg",
   title: "My education",
   description: "My educational journey combines formal university training with practical bootcamp experience and self-directed learning.",
   items: [
@@ -67,151 +65,320 @@ const skills = {
   ],
 };
 
-const AnimatedCard = ({ children, index }: { children: React.ReactNode; index: number }) => {
-  const ref = useRef<HTMLLIElement>(null);
+// Card component for experience/education
+const ResumeCard = ({ item, type, index }: { item: any; type: "experience" | "education"; index: number }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    gsap.fromTo(el,
-      { opacity: 0, y: 30, scale: 0.95 },
-      { opacity: 1, y: 0, scale: 1, duration: 0.5, delay: index * 0.1, ease: "power3.out" }
+    if (!cardRef.current) return;
+    gsap.fromTo(
+      cardRef.current,
+      { y: 30, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.6, delay: index * 0.1, ease: "power3.out" }
     );
   }, [index]);
-  return <li ref={ref}>{children}</li>;
+
+  return (
+    <div
+      ref={cardRef}
+      className="resume-card group relative overflow-hidden border border-white/[0.06] p-8 lg:p-10 transition-all duration-400"
+    >
+      {/* Hover glow */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        style={{
+          background: "linear-gradient(135deg, rgba(0,255,153,0.05) 0%, transparent 60%)",
+        }}
+      />
+
+      {/* Top accent bar */}
+      <div className="h-[2px] w-12 bg-accent mb-6 group-hover:w-16 transition-all duration-400 relative z-10" />
+
+      {/* Duration badge */}
+      <span className="text-[10px] tracking-[2px] uppercase text-accent bg-accent/[0.08] border border-accent/20 px-3 py-1.5 inline-block mb-4 relative z-10">
+        {item.duration}
+      </span>
+
+      {/* Title */}
+      <h3 className="text-lg lg:text-xl leading-tight mb-4 text-white group-hover:text-accent transition-colors duration-300 max-w-[300px] relative z-10"
+        style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: "0.5px" }}
+      >
+        {type === "experience" ? item.position : item.degree}
+      </h3>
+
+      {/* Company/Institution */}
+      <div className="flex items-center gap-3 pt-4 border-t border-white/[0.06] group-hover:border-accent/20 transition-colors duration-300 relative z-10">
+        <span className="w-2 h-2 rounded-full bg-accent" />
+        <p className="text-sm text-white/50 group-hover:text-white/70 transition-colors duration-300">
+          {type === "experience" ? item.company : item.institution}
+        </p>
+      </div>
+    </div>
+  );
 };
 
+// Skill icon component
 const SkillIcon = ({ skill, index }: { skill: { icon: React.ReactNode; name: string }; index: number }) => {
-  const ref = useRef<HTMLLIElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    gsap.fromTo(ref.current,
-      { opacity: 0, scale: 0.5, rotateY: 90 },
-      { opacity: 1, scale: 1, rotateY: 0, duration: 0.5, delay: index * 0.05, ease: "back.out(1.7)" }
+    gsap.fromTo(
+      ref.current,
+      { opacity: 0, scale: 0.6 },
+      { opacity: 1, scale: 1, duration: 0.5, delay: index * 0.05, ease: "back.out(1.7)" }
     );
   }, [index]);
 
   const handleEnter = () => {
-    const el = ref.current?.querySelector(".skill-icon");
-    if (el) gsap.to(el, { scale: 1.2, rotateZ: 10, duration: 0.3 });
+    if (ref.current?.querySelector(".skill-icon")) {
+      gsap.to(ref.current.querySelector(".skill-icon"), {
+        scale: 1.3,
+        duration: 0.3,
+        ease: "back.out(2)",
+      });
+    }
   };
+
   const handleLeave = () => {
-    const el = ref.current?.querySelector(".skill-icon");
-    if (el) gsap.to(el, { scale: 1, rotateZ: 0, duration: 0.3 });
+    if (ref.current?.querySelector(".skill-icon")) {
+      gsap.to(ref.current.querySelector(".skill-icon"), {
+        scale: 1,
+        duration: 0.3,
+      });
+    }
   };
 
   return (
-    <li ref={ref} onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
+    <div
+      ref={ref}
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
+      className="skill-card group relative"
+    >
       <TooltipProvider delayDuration={100}>
         <Tooltip>
-          <TooltipTrigger className="w-full h-[150px] bg-[#232329] rounded-xl flex justify-center items-center group cursor-none">
-            <div className="skill-icon text-6xl group-hover:text-accent transition-colors duration-300">{skill.icon}</div>
+          <TooltipTrigger className="w-full h-[140px] border border-white/[0.06] bg-gradient-to-br from-white/[0.03] to-transparent flex justify-center items-center transition-all duration-300 group-hover:border-accent/40 group-hover:bg-gradient-to-br group-hover:from-accent/[0.08] group-hover:to-transparent">
+            <div className="skill-icon text-5xl group-hover:text-accent transition-colors duration-300">
+              {skill.icon}
+            </div>
           </TooltipTrigger>
-          <TooltipContent><p className="capitalize">{skill.name}</p></TooltipContent>
+          <TooltipContent><p className="capitalize text-xs tracking-wide">{skill.name}</p></TooltipContent>
         </Tooltip>
       </TooltipProvider>
-    </li>
+    </div>
   );
 };
 
 const Resume = () => {
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1, transition: { delay: 2.4, duration: 0.4, ease: "easeIn" } }}
-      className="min-h-[80vh] flex items-center justify-center py-12 xl:py-0 relative z-10"
-    >
-      <div className="container mx-auto">
-        <Tabs defaultValue="experience" className="flex flex-col xl:flex-row gap-[60px]">
-          <TabsList className="flex flex-col w-full max-w-[380px] mx-auto xl:mx-0 gap-6">
-            <TabsTrigger value="experience">Experience</TabsTrigger>
-            <TabsTrigger value="education">Education</TabsTrigger>
-            <TabsTrigger value="skills">Skills</TabsTrigger>
-            <TabsTrigger value="about">About me</TabsTrigger>
-          </TabsList>
+  const [activeTab, setActiveTab] = useState("experience");
+  const sectionRef = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
-          <div className="min-h-[70vh] w-full">
-            <TabsContent value="experience" className="w-full">
-              <div className="flex flex-col gap-[30px] text-center xl:text-left">
-                <h3 className="text-4xl font-bold">{experience.title}</h3>
-                <p className="max-w-[600px] text-white/60 mx-auto xl:mx-0">{experience.description}</p>
-                <ScrollArea className="h-[400px]">
-                  <ul className="grid grid-cols-1 lg:grid-cols-2 gap-[30px]">
-                    {experience.items.map((item, index) => (
-                      <AnimatedCard key={index} index={index}>
-                        <div className="bg-[#232329] h-[184px] py-6 px-10 rounded-xl flex flex-col justify-center items-center lg:items-start gap-1 hover:bg-[#2a2a32] hover:shadow-[0_0_20px_rgba(0,255,153,0.1)] transition-all duration-300 group">
-                          <span className="text-accent">{item.duration}</span>
-                          <h3 className="text-xl max-w-[260px] min-h-[60px] text-center lg:text-left group-hover:text-accent/80 transition-colors duration-300">{item.position}</h3>
-                          <div className="flex items-center gap-3">
-                            <span className="w-[6px] h-[6px] rounded-full bg-accent animate-pulse" />
-                            <p className="text-white/60">{item.company}</p>
-                          </div>
-                        </div>
-                      </AnimatedCard>
-                    ))}
-                  </ul>
-                </ScrollArea>
-              </div>
-            </TabsContent>
+  const tabs = [
+    { value: "experience", label: "Experience" },
+    { value: "education", label: "Education" },
+    { value: "skills", label: "Skills" },
+    { value: "about", label: "About" },
+  ];
 
-            <TabsContent value="education" className="w-full">
-              <div className="flex flex-col gap-[30px] text-center xl:text-left">
-                <h3 className="text-4xl font-bold">{education.title}</h3>
-                <p className="max-w-[600px] text-white/60 mx-auto xl:mx-0">{education.description}</p>
-                <ScrollArea className="h-[400px]">
-                  <ul className="grid grid-cols-1 lg:grid-cols-2 gap-[30px]">
-                    {education.items.map((item, index) => (
-                      <AnimatedCard key={index} index={index}>
-                        <div className="bg-[#232329] h-[184px] py-6 px-10 rounded-xl flex flex-col justify-center items-center lg:items-start gap-1 hover:bg-[#2a2a32] hover:shadow-[0_0_20px_rgba(0,255,153,0.1)] transition-all duration-300 group">
-                          <span className="text-accent">{item.duration}</span>
-                          <h3 className="text-xl max-w-[260px] min-h-[60px] text-center lg:text-left group-hover:text-accent/80 transition-colors">{item.degree}</h3>
-                          <div className="flex items-center gap-3">
-                            <span className="w-[6px] h-[6px] rounded-full bg-accent animate-pulse" />
-                            <p className="text-white/60">{item.institution}</p>
-                          </div>
-                        </div>
-                      </AnimatedCard>
-                    ))}
-                  </ul>
-                </ScrollArea>
-              </div>
-            </TabsContent>
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(".resume-header", {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 85%",
+          once: true,
+        },
+        y: 30,
+        opacity: 0,
+        duration: 0.6,
+        ease: "power3.out",
+      });
 
-            <TabsContent value="skills" className="w-full h-full">
-              <div className="flex flex-col gap-[30px]">
-                <div className="flex flex-col gap-[30px] text-center xl:text-left">
-                  <h3 className="text-4xl font-bold">{skills.title}</h3>
-                  <p className="max-w-[600px] text-white/60 mx-auto xl:mx-0">{skills.description}</p>
-                </div>
-                <ScrollArea className="h-[400px]">
-                  <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 xl:gap-[30px]">
-                    {skills.skillset.map((skill, index) => (
-                      <SkillIcon key={index} skill={skill} index={index} />
-                    ))}
-                  </ul>
-                </ScrollArea>
-              </div>
-            </TabsContent>
+      gsap.from(".resume-content", {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          once: true,
+        },
+        y: 40,
+        opacity: 0,
+        stagger: 0.08,
+        duration: 0.7,
+        ease: "power3.out",
+      });
+    }, sectionRef);
 
-            <TabsContent value="about" className="w-full text-center xl:text-left">
-              <div className="flex flex-col gap-[30px]">
-                <h3 className="text-4xl font-bold">{about.title}</h3>
-                <p className="max-w-[600px] text-white/60 mx-auto xl:mx-0">{about.description}</p>
-                <ul className="grid grid-cols-1 xl:grid-cols-2 gap-y-6 max-w-[620px] mx-auto xl:mx-0">
-                  {about.info.map((item, index) => (
-                    <li
-                      key={index}
-                      className="flex items-center justify-center xl:justify-start gap-4 group hover:translate-x-1 transition-transform duration-200"
-                    >
-                      <span className="text-white/60 group-hover:text-white/80 transition-colors">{item.fieldName}</span>
-                      <span className="text-xl group-hover:text-accent transition-colors duration-300">{item.fieldValue}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </TabsContent>
+    const t = setTimeout(() => ScrollTrigger.refresh(), 100);
+
+    return () => {
+      clearTimeout(t);
+      ctx.revert();
+    };
+  }, []);
+
+  // Animate content on tab change
+  useEffect(() => {
+    if (contentRef.current) {
+      gsap.fromTo(
+        contentRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
+      );
+    }
+  }, [activeTab]);
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case "experience":
+        return (
+          <div className="flex flex-col gap-8">
+            <div>
+              <h2 className="text-4xl xl:text-5xl tracking-wide uppercase mb-3 text-white"
+                style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+              >
+                {experience.title}
+              </h2>
+              <p className="text-sm text-white/40 max-w-[500px] leading-relaxed font-light">
+                {experience.description}
+              </p>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {experience.items.map((item, index) => (
+                <ResumeCard key={index} item={item} type="experience" index={index} />
+              ))}
+            </div>
           </div>
-        </Tabs>
+        );
+
+      case "education":
+        return (
+          <div className="flex flex-col gap-8">
+            <div>
+              <h2 className="text-4xl xl:text-5xl tracking-wide uppercase mb-3 text-white"
+                style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+              >
+                {education.title}
+              </h2>
+              <p className="text-sm text-white/40 max-w-[500px] leading-relaxed font-light">
+                {education.description}
+              </p>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {education.items.map((item, index) => (
+                <ResumeCard key={index} item={item} type="education" index={index} />
+              ))}
+            </div>
+          </div>
+        );
+
+      case "skills":
+        return (
+          <div className="flex flex-col gap-8">
+            <div>
+              <h2 className="text-4xl xl:text-5xl tracking-wide uppercase mb-3 text-white"
+                style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+              >
+                {skills.title}
+              </h2>
+              <p className="text-sm text-white/40 max-w-[500px] leading-relaxed font-light">
+                {skills.description}
+              </p>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              {skills.skillset.map((skill, index) => (
+                <SkillIcon key={index} skill={skill} index={index} />
+              ))}
+            </div>
+          </div>
+        );
+
+      case "about":
+        return (
+          <div className="flex flex-col gap-12">
+            <div>
+              <h2 className="text-4xl xl:text-5xl tracking-wide uppercase mb-3 text-white"
+                style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+              >
+                {about.title}
+              </h2>
+              <p className="text-sm text-white/40 max-w-[600px] leading-relaxed font-light">
+                {about.description}
+              </p>
+            </div>
+
+            {/* Info grid */}
+            <div className="border border-white/[0.06] divide-y divide-white/[0.06]">
+              {about.info.map((item, index) => (
+                <div
+                  key={index}
+                  className="group flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-6 xl:p-8 transition-all duration-300 hover:bg-white/[0.02]"
+                >
+                  <span className="text-xs tracking-[2px] uppercase text-white/40 group-hover:text-white/60 transition-colors duration-300">
+                    {item.fieldName}
+                  </span>
+                  <span className="text-lg text-accent group-hover:text-white transition-colors duration-300 font-light">
+                    {item.fieldValue}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <section
+      ref={sectionRef}
+      className="min-h-screen flex flex-col justify-center py-16 xl:py-24 relative z-10"
+    >
+      <div className="container mx-auto px-6 xl:px-12 max-w-6xl">
+        {/* Header */}
+        <div className="resume-header flex items-end justify-between border-b border-white/[0.06] pb-8 mb-16 gap-8">
+          <h1
+            className="text-[64px] xl:text-[88px] leading-none tracking-widest uppercase"
+            style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+          >
+            My<br />
+            <span className="text-accent">Journey</span>
+          </h1>
+          <p className="text-sm text-white/40 text-right max-w-[200px] leading-relaxed hidden md:block font-light">
+            Education, experience, and skills that shape my craft.
+          </p>
+        </div>
+
+        {/* Custom Tab Navigation */}
+        <div className="border-b border-white/[0.06] mb-16 pb-0 overflow-x-auto">
+          <div className="flex gap-16 min-w-max relative">
+            {tabs.map((tab) => (
+              <button
+                key={tab.value}
+                onClick={() => setActiveTab(tab.value)}
+                className={`text-xs tracking-[3px] uppercase relative pb-5 transition-all duration-300 ${
+                  activeTab === tab.value
+                    ? "text-accent"
+                    : "text-white/40 hover:text-white/70"
+                }`}
+              >
+                {tab.label}
+                {activeTab === tab.value && (
+                  <span className="absolute bottom-0 left-0 h-[2px] w-full bg-accent" />
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Tab Content */}
+        <div ref={contentRef} className="resume-content">
+          {renderContent()}
+        </div>
       </div>
-    </motion.div>
+    </section>
   );
 };
 
