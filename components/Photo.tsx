@@ -57,7 +57,7 @@ const Photo = () => {
         <div ref={orbitRef} className="absolute inset-0 flex items-center justify-center pointer-events-none">
           {/* Ring 1 */}
           <svg
-            className="orbit-ring-1 absolute w-[340px] h-[340px] xl:w-[560px] xl:h-[560px]"
+            className="orbit-ring-1 absolute w-85 h-85 xl:w-140 xl:h-140"
             viewBox="0 0 560 560"
             fill="none"
           >
@@ -66,7 +66,7 @@ const Photo = () => {
           </svg>
           {/* Ring 2 */}
           <svg
-            className="orbit-ring-2 absolute w-[290px] h-[290px] xl:w-[480px] xl:h-[480px]"
+            className="orbit-ring-2 absolute w-72.5 h-72.5 xl:w-120 xl:h-120"
             viewBox="0 0 480 480"
             fill="none"
           >
@@ -86,7 +86,7 @@ const Photo = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, transition: { delay: 2.2, duration: 0.5 } }}
-          className="w-[298px] h-[298px] xl:w-[498px] xl:h-[498px] mix-blend-lighten relative"
+          className="w-74.5 h-74.5 xl:w-124.5 xl:h-124.5 mix-blend-lighten relative"
         >
           <Image
             src="/assets/avatar.svg"

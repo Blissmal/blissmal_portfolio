@@ -23,9 +23,9 @@ const Stats = () => {
     <section ref={ref} className="relative z-10 mt-16 xl:mt-24">
       {/* Thin top rule with accent glow at center */}
       <div className="relative h-px w-full">
-        <div className="absolute inset-0 bg-white/[0.06]" />
+        <div className="absolute inset-0 bg-white/6" />
         <div className="absolute left-1/2 -translate-x-1/2 h-px w-48
-          bg-gradient-to-r from-transparent via-accent/60 to-transparent" />
+          bg-linear-to-r from-transparent via-accent/60 to-transparent" />
       </div>
 
       <div className="container mx-auto px-6 xl:px-12 max-w-6xl">
@@ -35,8 +35,8 @@ const Stats = () => {
               key={i}
               className={[
                 "group relative py-10 px-6 xl:px-8 flex flex-col gap-0 overflow-hidden",
-                "transition-all duration-500 hover:bg-white/[0.025]",
-                i < stats.length - 1 ? "border-r border-white/[0.06]" : "",
+                "transition-all duration-500 hover:bg-white/2.5",
+                i < stats.length - 1 ? "border-r border-white/6" : "",
                 // Staggered slide-up via inline delay
               ].join(" ")}
               style={{
@@ -78,7 +78,7 @@ const Stats = () => {
               </p>
 
               {/* Animated underline */}
-              <div className="mt-4 h-[1px] w-0 bg-gradient-to-r from-accent to-accent/20
+              <div className="mt-4 h-px w-0 bg-linear-to-r from-accent to-accent/20
                 group-hover:w-10 transition-all duration-500 ease-out" />
 
               {/* Subtle radial glow on hover */}
@@ -94,7 +94,7 @@ const Stats = () => {
       </div>
 
       {/* Bottom rule */}
-      <div className="h-px bg-white/[0.04] mt-0" />
+      <div className="h-px bg-white/4 mt-0" />
     </section>
   )
 }

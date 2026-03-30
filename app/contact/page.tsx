@@ -77,7 +77,7 @@ const Contact = () => {
       <div className="container mx-auto px-6 xl:px-12 max-w-6xl">
 
         {/* Header */}
-        <div className="contact-header flex items-end justify-between border-b border-white/[0.06] pb-10 mb-16 gap-8">
+        <div className="contact-header flex items-end justify-between border-b border-white/6 pb-10 mb-16 gap-8">
           <div>
             <span className="text-[10px] tracking-[4px] uppercase text-accent/50 font-mono block mb-3">
               Contact
@@ -90,7 +90,7 @@ const Contact = () => {
               <span className="text-accent">Touch</span>
             </h1>
           </div>
-          <p className="text-sm text-white/35 text-right max-w-[200px] leading-relaxed hidden md:block font-light pb-2">
+          <p className="text-sm text-white/35 text-right max-w-50 leading-relaxed hidden md:block font-light pb-2">
             Have a project in mind? Let's create something extraordinary.
           </p>
         </div>
@@ -104,15 +104,15 @@ const Contact = () => {
               <a
                 key={index}
                 href={item.href}
-                className="contact-info-card group relative overflow-hidden border border-white/[0.06] p-7 transition-all duration-400 hover:no-underline hover:border-accent/20"
+                className="contact-info-card group relative overflow-hidden border border-white/6 p-7 transition-all duration-400 hover:no-underline hover:border-accent/20"
               >
                 {/* Hover glow */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                   style={{ background: 'linear-gradient(135deg, rgba(0,255,153,0.05) 0%, transparent 60%)' }} />
 
                 {/* Icon */}
-                <div className="w-14 h-14 border border-accent/15 bg-accent/[0.06] flex items-center justify-center mb-5
-                  group-hover:border-accent/35 group-hover:bg-accent/[0.12] transition-all duration-300
+                <div className="w-14 h-14 border border-accent/15 bg-accent/6 flex items-center justify-center mb-5
+                  group-hover:border-accent/35 group-hover:bg-accent/12 transition-all duration-300
                   group-hover:shadow-[0_0_18px_rgba(0,255,153,0.15)]">
                   <div className="text-xl text-accent group-hover:scale-110 transition-transform duration-300">
                     {item.icon}
@@ -138,7 +138,7 @@ const Contact = () => {
           <form
             ref={formRef}
             action={handleContact}
-            className="contact-form xl:col-span-2 border border-white/[0.06] p-10 xl:p-14 relative overflow-hidden"
+            className="contact-form xl:col-span-2 border border-white/6 p-10 xl:p-14 relative overflow-hidden"
           >
             {/* Subtle corner accent */}
             <div className="absolute top-0 left-0 w-16 h-16 pointer-events-none">
@@ -162,8 +162,8 @@ const Contact = () => {
                 Let's work<br />
                 <span className="text-accent">together</span>
               </h2>
-              <div className="h-[1px] w-16 bg-accent/60 mb-5" />
-              <p className="text-sm text-white/35 max-w-[340px] leading-relaxed font-light">
+              <div className="h-px w-16 bg-accent/60 mb-5" />
+              <p className="text-sm text-white/35 max-w-85 leading-relaxed font-light">
                 Drop your details and a brief message. I'll get back to you within 24 hours.
               </p>
             </div>
@@ -173,12 +173,12 @@ const Contact = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="form-field">
                   <Input name="firstname" placeholder="First name" type="text" required
-                    className="h-13 bg-white/[0.02] border border-white/[0.07] text-white placeholder:text-white/25
+                    className="h-13 bg-white/2 border border-white/[0.07] text-white placeholder:text-white/25
                       rounded-none focus:border-accent focus:shadow-[0_0_0_2px_rgba(0,255,153,0.08)] transition-all duration-300" />
                 </div>
                 <div className="form-field">
                   <Input name="lastname" placeholder="Last name" type="text" required
-                    className="h-13 bg-white/[0.02] border border-white/[0.07] text-white placeholder:text-white/25
+                    className="h-13 bg-white/2 border border-white/[0.07] text-white placeholder:text-white/25
                       rounded-none focus:border-accent focus:shadow-[0_0_0_2px_rgba(0,255,153,0.08)] transition-all duration-300" />
                 </div>
               </div>
@@ -186,19 +186,19 @@ const Contact = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="form-field">
                   <Input name="email" placeholder="Email address" type="email" required
-                    className="h-13 bg-white/[0.02] border border-white/[0.07] text-white placeholder:text-white/25
+                    className="h-13 bg-white/2 border border-white/[0.07] text-white placeholder:text-white/25
                       rounded-none focus:border-accent focus:shadow-[0_0_0_2px_rgba(0,255,153,0.08)] transition-all duration-300" />
                 </div>
                 <div className="form-field">
                   <Input name="phone" placeholder="Phone number" type="tel"
-                    className="h-13 bg-white/[0.02] border border-white/[0.07] text-white placeholder:text-white/25
+                    className="h-13 bg-white/2 border border-white/[0.07] text-white placeholder:text-white/25
                       rounded-none focus:border-accent focus:shadow-[0_0_0_2px_rgba(0,255,153,0.08)] transition-all duration-300" />
                 </div>
               </div>
 
               <div className="form-field">
                 <Select name="service">
-                  <SelectTrigger className="h-13 bg-white/[0.02] border border-white/[0.07] text-white rounded-none
+                  <SelectTrigger className="h-13 bg-white/2 border border-white/[0.07] text-white rounded-none
                     focus:border-accent focus:shadow-[0_0_0_2px_rgba(0,255,153,0.08)]">
                     <SelectValue placeholder="Select a service" className="text-white/25" />
                   </SelectTrigger>
@@ -217,7 +217,7 @@ const Contact = () => {
 
               <div className="form-field">
                 <Textarea name="message" placeholder="Tell me about your project..." required
-                  className="min-h-[130px] bg-white/[0.02] border border-white/[0.07] text-white placeholder:text-white/25
+                  className="min-h-32.5 bg-white/2 border border-white/[0.07] text-white placeholder:text-white/25
                     rounded-none focus:border-accent focus:shadow-[0_0_0_2px_rgba(0,255,153,0.08)] resize-none transition-all duration-300" />
               </div>
 
@@ -231,7 +231,7 @@ const Contact = () => {
                 >
                   Send message
                 </button>
-                <div className="h-px flex-1 bg-gradient-to-r from-accent/50 to-transparent" />
+                <div className="h-px flex-1 bg-linear-to-r from-accent/50 to-transparent" />
               </div>
             </div>
           </form>

@@ -46,7 +46,7 @@ const Stairs = () => {
 
             {/* Diagonal slash accent line */}
             <motion.div
-              className="absolute bottom-0 left-0 w-full h-[2px]"
+              className="absolute bottom-0 left-0 w-full h-0.5"
               initial={{ scaleX: 0, originX: 0 }}
               animate={{ scaleX: 1, originX: 0 }}
               transition={{

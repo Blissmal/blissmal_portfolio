@@ -81,7 +81,7 @@ const ResumeCard = ({ item, type, index }: { item: any; type: "experience" | "ed
   return (
     <div
       ref={cardRef}
-      className="resume-card group relative overflow-hidden border border-white/[0.06] p-8 lg:p-10 transition-all duration-400"
+      className="resume-card group relative overflow-hidden border border-white/6 p-8 lg:p-10 transition-all duration-400"
     >
       {/* Hover glow */}
       <div
@@ -92,22 +92,22 @@ const ResumeCard = ({ item, type, index }: { item: any; type: "experience" | "ed
       />
 
       {/* Top accent bar */}
-      <div className="h-[2px] w-12 bg-accent mb-6 group-hover:w-16 transition-all duration-400 relative z-10" />
+      <div className="h-0.5 w-12 bg-accent mb-6 group-hover:w-16 transition-all duration-400 relative z-10" />
 
       {/* Duration badge */}
-      <span className="text-[10px] tracking-[2px] uppercase text-accent bg-accent/[0.08] border border-accent/20 px-3 py-1.5 inline-block mb-4 relative z-10">
+      <span className="text-[10px] tracking-[2px] uppercase text-accent bg-accent/8 border border-accent/20 px-3 py-1.5 inline-block mb-4 relative z-10">
         {item.duration}
       </span>
 
       {/* Title */}
-      <h3 className="text-lg lg:text-xl leading-tight mb-4 text-white group-hover:text-accent transition-colors duration-300 max-w-[300px] relative z-10"
+      <h3 className="text-lg lg:text-xl leading-tight mb-4 text-white group-hover:text-accent transition-colors duration-300 max-w-75 relative z-10"
         style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: "0.5px" }}
       >
         {type === "experience" ? item.position : item.degree}
       </h3>
 
       {/* Company/Institution */}
-      <div className="flex items-center gap-3 pt-4 border-t border-white/[0.06] group-hover:border-accent/20 transition-colors duration-300 relative z-10">
+      <div className="flex items-center gap-3 pt-4 border-t border-white/6 group-hover:border-accent/20 transition-colors duration-300 relative z-10">
         <span className="w-2 h-2 rounded-full bg-accent" />
         <p className="text-sm text-white/50 group-hover:text-white/70 transition-colors duration-300">
           {type === "experience" ? item.company : item.institution}
@@ -157,7 +157,7 @@ const SkillIcon = ({ skill, index }: { skill: { icon: React.ReactNode; name: str
     >
       <TooltipProvider delayDuration={100}>
         <Tooltip>
-          <TooltipTrigger className="w-full h-[140px] border border-white/[0.06] bg-gradient-to-br from-white/[0.03] to-transparent flex justify-center items-center transition-all duration-300 group-hover:border-accent/40 group-hover:bg-gradient-to-br group-hover:from-accent/[0.08] group-hover:to-transparent">
+          <TooltipTrigger className="w-full h-35 border border-white/6 bg-linear-to-br from-white/3 to-transparent flex justify-center items-center transition-all duration-300 group-hover:border-accent/40 group-hover:bg-linear-to-br group-hover:from-accent/8 group-hover:to-transparent">
             <div className="skill-icon text-5xl group-hover:text-accent transition-colors duration-300">
               {skill.icon}
             </div>
@@ -239,7 +239,7 @@ const Resume = () => {
               >
                 {experience.title}
               </h2>
-              <p className="text-sm text-white/40 max-w-[500px] leading-relaxed font-light">
+              <p className="text-sm text-white/40 max-w-125 leading-relaxed font-light">
                 {experience.description}
               </p>
             </div>
@@ -260,7 +260,7 @@ const Resume = () => {
               >
                 {education.title}
               </h2>
-              <p className="text-sm text-white/40 max-w-[500px] leading-relaxed font-light">
+              <p className="text-sm text-white/40 max-w-125 leading-relaxed font-light">
                 {education.description}
               </p>
             </div>
@@ -281,7 +281,7 @@ const Resume = () => {
               >
                 {skills.title}
               </h2>
-              <p className="text-sm text-white/40 max-w-[500px] leading-relaxed font-light">
+              <p className="text-sm text-white/40 max-w-125 leading-relaxed font-light">
                 {skills.description}
               </p>
             </div>
@@ -302,17 +302,17 @@ const Resume = () => {
               >
                 {about.title}
               </h2>
-              <p className="text-sm text-white/40 max-w-[600px] leading-relaxed font-light">
+              <p className="text-sm text-white/40 max-w-150 leading-relaxed font-light">
                 {about.description}
               </p>
             </div>
 
             {/* Info grid */}
-            <div className="border border-white/[0.06] divide-y divide-white/[0.06]">
+            <div className="border border-white/6 divide-y divide-white/6">
               {about.info.map((item, index) => (
                 <div
                   key={index}
-                  className="group flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-6 xl:p-8 transition-all duration-300 hover:bg-white/[0.02]"
+                  className="group flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-6 xl:p-8 transition-all duration-300 hover:bg-white/2"
                 >
                   <span className="text-xs tracking-[2px] uppercase text-white/40 group-hover:text-white/60 transition-colors duration-300">
                     {item.fieldName}
@@ -338,7 +338,7 @@ const Resume = () => {
     >
       <div className="container mx-auto px-6 xl:px-12 max-w-6xl">
         {/* Header */}
-        <div className="resume-header flex items-end justify-between border-b border-white/[0.06] pb-8 mb-16 gap-8">
+        <div className="resume-header flex items-end justify-between border-b border-white/6 pb-8 mb-16 gap-8">
           <h1
             className="text-[64px] xl:text-[88px] leading-none tracking-widest uppercase"
             style={{ fontFamily: "'Bebas Neue', sans-serif" }}
@@ -346,13 +346,13 @@ const Resume = () => {
             My<br />
             <span className="text-accent">Journey</span>
           </h1>
-          <p className="text-sm text-white/40 text-right max-w-[200px] leading-relaxed hidden md:block font-light">
+          <p className="text-sm text-white/40 text-right max-w-50 leading-relaxed hidden md:block font-light">
             Education, experience, and skills that shape my craft.
           </p>
         </div>
 
         {/* Custom Tab Navigation */}
-        <div className="border-b border-white/[0.06] mb-16 pb-0 overflow-x-auto">
+        <div className="border-b border-white/6 mb-16 pb-0 overflow-x-auto">
           <div className="flex gap-16 min-w-max relative">
             {tabs.map((tab) => (
               <button
@@ -365,7 +365,7 @@ const Resume = () => {
               >
                 {tab.label}
                 {activeTab === tab.value && (
-                  <span className="absolute bottom-0 left-0 h-[2px] w-full bg-accent" />
+                  <span className="absolute bottom-0 left-0 h-0.5 w-full bg-accent" />
                 )}
               </button>
             ))}

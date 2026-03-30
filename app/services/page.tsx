@@ -74,7 +74,7 @@ const Services = () => {
       <div className="container mx-auto px-6 xl:px-12 max-w-6xl relative">
 
         {/* Header */}
-        <div className="services-header flex items-end justify-between border-b border-white/[0.06] pb-10 mb-16 gap-8">
+        <div className="services-header flex items-end justify-between border-b border-white/6 pb-10 mb-16 gap-8">
           <div>
             <span className="text-[10px] tracking-[4px] uppercase text-accent/60 font-mono block mb-4">
               What I offer
@@ -87,13 +87,13 @@ const Services = () => {
               <span className="text-accent">Build</span>
             </h1>
           </div>
-          <p className="text-sm text-white/30 text-right max-w-[180px] leading-relaxed hidden md:block font-light">
+          <p className="text-sm text-white/30 text-right max-w-45 leading-relaxed hidden md:block font-light">
             Crafting precise digital experiences — from code to pixel to algorithm.
           </p>
         </div>
 
         {/* Services list — editorial row layout */}
-        <div className="flex flex-col divide-y divide-white/[0.06]">
+        <div className="flex flex-col divide-y divide-white/6">
           {services.map((service, i) => (
             <Link
               key={i}
@@ -106,10 +106,10 @@ const Services = () => {
                 style={{ background: 'linear-gradient(90deg, rgba(0,255,153,0.03) 0%, transparent 60%)' }}
               />
               {/* Left accent bar */}
-              <div className="absolute left-0 top-0 bottom-0 w-0 group-hover:w-[2px] bg-accent transition-all duration-400" />
+              <div className="absolute left-0 top-0 bottom-0 w-0 group-hover:w-0.5 bg-accent transition-all duration-400" />
 
               {/* Number */}
-              <div className="xl:w-[120px] flex-shrink-0 pl-6 xl:pl-8">
+              <div className="xl:w-30 shrink-0 pl-6 xl:pl-8">
                 <span
                   className="text-[13px] tracking-[3px] font-mono text-white/20 group-hover:text-accent transition-colors duration-400"
                 >
@@ -118,7 +118,7 @@ const Services = () => {
               </div>
 
               {/* Tag + Title */}
-              <div className="xl:w-[300px] flex-shrink-0 pl-6 xl:pl-0">
+              <div className="xl:w-75 shrink-0 pl-6 xl:pl-0">
                 <span className="text-[9px] tracking-[3px] uppercase text-white/30 block mb-2 group-hover:text-accent/60 transition-colors duration-300">
                   {service.tag}
                 </span>
@@ -132,18 +132,18 @@ const Services = () => {
 
               {/* Description */}
               <div className="flex-1 pl-6 xl:pl-0 xl:px-12">
-                <p className="text-sm leading-relaxed text-white/40 group-hover:text-white/60 transition-colors duration-300 font-light max-w-[400px]">
+                <p className="text-sm leading-relaxed text-white/40 group-hover:text-white/60 transition-colors duration-300 font-light max-w-100">
                   {service.desc}
                 </p>
               </div>
 
               {/* Tech tags */}
-              <div className="xl:w-[240px] flex-shrink-0 pl-6 xl:pl-0">
+              <div className="xl:w-60 shrink-0 pl-6 xl:pl-0">
                 <div className="flex flex-wrap gap-2">
                   {service.tech.map((t, ti) => (
                     <span
                       key={ti}
-                      className="text-[9px] tracking-[1.5px] uppercase text-white/25 border border-white/[0.06] px-2.5 py-1 group-hover:border-accent/20 group-hover:text-accent/50 transition-all duration-300"
+                      className="text-[9px] tracking-[1.5px] uppercase text-white/25 border border-white/6 px-2.5 py-1 group-hover:border-accent/20 group-hover:text-accent/50 transition-all duration-300"
                     >
                       {t}
                     </span>
@@ -152,7 +152,7 @@ const Services = () => {
               </div>
 
               {/* Arrow */}
-              <div className="flex-shrink-0 pr-2 pl-6 xl:pl-0">
+              <div className="shrink-0 pr-2 pl-6 xl:pl-0">
                 <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-accent group-hover:border-accent group-hover:-rotate-45 transition-all duration-400">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"
                     className="stroke-white/30 group-hover:stroke-black transition-colors duration-400">

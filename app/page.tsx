@@ -76,7 +76,7 @@ const Home = () => {
       }} />
 
       {/* Top rule */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-accent/30 to-transparent" />
 
       <div className="container mx-auto px-6 xl:px-12 max-w-6xl">
         <div className="flex flex-col xl:flex-row items-center justify-between gap-12 xl:gap-0 py-16 xl:py-0">
@@ -85,10 +85,10 @@ const Home = () => {
           <div className="flex xl:flex-row gap-0 xl:gap-10 order-2 xl:order-1 flex-1">
 
             {/* Vertical line */}
-            <div className="hidden xl:flex flex-col items-center gap-4 pt-2 mr-2 flex-shrink-0">
+            <div className="hidden xl:flex flex-col items-center gap-4 pt-2 mr-2 shrink-0">
               <div
                 ref={lineRef}
-                className="w-px flex-1 max-h-[300px]"
+                className="w-px flex-1 max-h-75"
                 style={{ background: 'linear-gradient(to bottom, #00ff99, rgba(0,255,153,0.08))' }}
               />
               <div
@@ -131,7 +131,7 @@ const Home = () => {
 
               <p
                 ref={paraRef}
-                className="max-w-[420px] mb-10 text-sm text-white/50 leading-relaxed font-light opacity-0"
+                className="max-w-105 mb-10 text-sm text-white/50 leading-relaxed font-light opacity-0"
               >
                 I build digital experiences that are both functional and beautiful —
                 from full-stack web apps to intelligent AI systems.
@@ -164,7 +164,7 @@ const Home = () => {
           </div>
 
           {/* Right: Photo — fixed size, no stretch */}
-          <div className="order-1 xl:order-2 flex-shrink-0">
+          <div className="order-1 xl:order-2 shrink-0">
             <Photo />
           </div>
 
@@ -174,7 +174,7 @@ const Home = () => {
       <Stats />
 
       {/* Bottom rule */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.05] to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-white/5 to-transparent" />
     </section>
   )
 }

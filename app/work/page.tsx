@@ -147,7 +147,7 @@ const Work = () => {
       <div className="container mx-auto px-6 xl:px-12 max-w-6xl">
 
         {/* Header */}
-        <div className="work-entrance flex items-end justify-between border-b border-white/[0.06] pb-8 mb-14 gap-8">
+        <div className="work-entrance flex items-end justify-between border-b border-white/6 pb-8 mb-14 gap-8">
           <h1
             className="text-[60px] xl:text-[80px] leading-none tracking-widest uppercase"
             style={{ fontFamily: "'Bebas Neue', sans-serif" }}
@@ -161,12 +161,12 @@ const Work = () => {
         </div>
 
         {/* Main layout */}
-        <div className="work-entrance grid grid-cols-1 xl:grid-cols-2 border border-white/[0.06] min-h-[460px]">
+        <div className="work-entrance grid grid-cols-1 xl:grid-cols-2 border border-white/6 min-h-115">
 
           {/* Info panel */}
           <div
             ref={infoPanelRef}
-            className="flex flex-col justify-between p-10 xl:p-12 border-b xl:border-b-0 xl:border-r border-white/[0.06] order-2 xl:order-1"
+            className="flex flex-col justify-between p-10 xl:p-12 border-b xl:border-b-0 xl:border-r border-white/6 order-2 xl:order-1"
           >
             <div>
               {/* Number */}
@@ -215,7 +215,7 @@ const Work = () => {
             </div>
 
             <div>
-              <div className="h-px bg-white/[0.06] mb-6" />
+              <div className="h-px bg-white/6 mb-6" />
               <div className="flex items-center gap-4">
                 <TooltipProvider delayDuration={100}>
                   <Tooltip>
@@ -223,7 +223,7 @@ const Work = () => {
                       <Link
                         href={project.live}
                         target="_blank"
-                        className="w-[52px] h-[52px] rounded-full border border-white/10 bg-transparent flex items-center justify-center transition-all duration-300 hover:bg-accent hover:border-accent group"
+                        className="w-13 h-13 rounded-full border border-white/10 bg-transparent flex items-center justify-center transition-all duration-300 hover:bg-accent hover:border-accent group"
                       >
                         <BsArrowUpRight className="text-white/40 text-lg group-hover:text-black group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all" />
                       </Link>
@@ -238,7 +238,7 @@ const Work = () => {
                       <Link
                         href={project.github}
                         target="_blank"
-                        className="w-[52px] h-[52px] rounded-full border border-white/10 bg-transparent flex items-center justify-center transition-all duration-300 hover:bg-accent hover:border-accent group"
+                        className="w-13 h-13 rounded-full border border-white/10 bg-transparent flex items-center justify-center transition-all duration-300 hover:bg-accent hover:border-accent group"
                       >
                         <BsGithub className="text-white/40 text-lg group-hover:text-black group-hover:rotate-12 transition-all duration-300" />
                       </Link>
@@ -255,7 +255,7 @@ const Work = () => {
           </div>
 
           {/* Image / Swiper panel */}
-          <div className="order-1 xl:order-2 min-h-[320px] xl:min-h-0 relative">
+          <div className="order-1 xl:order-2 min-h-80 xl:min-h-0 relative">
             <Swiper
               modules={[Keyboard]}
               keyboard={{ enabled: true }}
@@ -263,11 +263,11 @@ const Work = () => {
               slidesPerView={1}
               onSwiper={(s) => { swiperRef.current = s }}
               onSlideChange={handleSlideChange}
-              className="w-full h-full min-h-[320px] xl:min-h-[460px]"
+              className="w-full h-full min-h-80 xl:min-h-115"
             >
               {projects.map((p, i) => (
                 <SwiperSlide key={i}>
-                  <div className="relative w-full h-full min-h-[320px] xl:min-h-[460px] overflow-hidden bg-[#111] group">
+                  <div className="relative w-full h-full min-h-80 xl:min-h-115 overflow-hidden bg-[#111] group">
                     {/* Scanlines overlay on hover */}
                     <div
                       className="absolute inset-0 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
@@ -294,14 +294,14 @@ const Work = () => {
         </div>
 
         {/* Nav bar */}
-        <div className="work-entrance flex items-center justify-between border border-t-0 border-white/[0.06] px-8 py-5">
+        <div className="work-entrance flex items-center justify-between border border-t-0 border-white/6 px-8 py-5">
           {/* Dot indicators */}
           <div className="flex gap-2 items-center">
             {projects.map((_, i) => (
               <button
                 key={i}
                 onClick={() => goTo(i)}
-                className="h-[2px] rounded-[1px] transition-all duration-300 cursor-pointer"
+                className="h-0.5 rounded-[1px] transition-all duration-300 cursor-pointer"
                 style={{
                   width: i === activeIndex ? '40px' : '24px',
                   background: i === activeIndex ? '#00FF99' : '#2a2a2a',
