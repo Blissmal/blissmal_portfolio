@@ -277,25 +277,37 @@ const Work = () => {
             >
               {projects.map((p, i) => (
                 <SwiperSlide key={i}>
-                  <div className="relative w-full h-full min-h-80 xl:min-h-115 overflow-hidden bg-[#111] group">
-                    {/* Scanlines overlay on hover */}
+                  <div className="relative w-full h-full min-h-80 xl:min-h-115 overflow-hidden bg-[#111] flex items-center justify-center group">
+
+                    <Image
+                      src={p.image}
+                      fill
+                      alt="Background blur"
+                      className="object-cover opacity-20 blur-2xl scale-125 pointer-events-none"
+                    />
+
                     <div
                       className="absolute inset-0 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                       style={{
                         background: 'repeating-linear-gradient(transparent, transparent 3px, rgba(0,255,153,0.015) 3px, rgba(0,255,153,0.015) 4px)',
                       }}
                     />
-                    <div className="absolute inset-0 bg-black/20 z-10 group-hover:bg-black/10 transition-colors duration-400" />
-                    <Image
-                      src={p.image}
-                      fill
-                      alt={p.title}
-                      className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
+                    <div className="absolute inset-0 bg-black/20 z-10 group-hover:bg-transparent transition-colors duration-400" />
+
+                    <div className="relative w-full h-full p-8 md:p-12 z-20">
+                      <Image
+                        src={p.image}
+                        fill
+                        alt={p.title}
+                        className="object-contain group-hover:scale-105 transition-transform duration-700 drop-shadow-2xl"
+                      />
+                    </div>
+
                     {/* Category label */}
                     <span className="absolute top-5 left-5 z-30 text-[10px] tracking-[3px] uppercase text-white/35">
                       {p.category}
                     </span>
+
                   </div>
                 </SwiperSlide>
               ))}
