@@ -4,8 +4,8 @@ import { resend } from "@/lib/resend"
 
 export async function sendContactEmail(formData: FormData) {
   const name = (formData.get("firstname") || "") + " " + (formData.get("lastname") || "");
-  const email = formData.get("email-address") as string;
-  const phone = formData.get("phone-number") as string;
+  const email = formData.get("email") as string;
+  const phone = formData.get("phone") as string;
   const service = formData.get("service") as string;
   const message = formData.get("message") as string;
 
