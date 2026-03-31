@@ -64,6 +64,16 @@ const projects = [
     live: 'https://lipa-phone.vercel.app',
     github: '#',
   },
+  {
+    num: '06',
+    category: 'Mobile App',
+    title: 'Chat App',
+    description: 'A modern chat application with real-time messaging and user authentication.',
+    stack: [{ name: 'Flutter' }, { name: 'Dart' }, { name: 'Firebase' }],
+    image: '/assets/work/chat-app.jpeg',
+    live: '#',
+    github: '#',
+  }
 ]
 
 const Work = () => {
