@@ -31,14 +31,30 @@ const services = [
     href: '',
     tech: ['Figma', 'Tailwind', 'Framer'],
   },
+  // {
+  //   num: '04',
+  //   tag: 'Emerging tech',
+  //   title: 'AI / ML Integration',
+  //   desc: 'Developing intelligent solutions using machine learning models and AI algorithms for data analysis and automation.',
+  //   href: '',
+  //   tech: ['Python', 'TensorFlow', 'OpenAI API'],
+  // },
   {
     num: '04',
-    tag: 'Emerging tech',
-    title: 'AI / ML Integration',
-    desc: 'Developing intelligent solutions using machine learning models and AI algorithms for data analysis and automation.',
+    tag: 'Support',
+    title: 'Technical Support',
+    desc: 'Providing timely and effective technical support for all your digital needs. Keeping your systems running smoothly and efficiently.',
     href: '',
-    tech: ['Python', 'TensorFlow', 'OpenAI API'],
+    tech: ['JavaScript', 'TypeScript'],
   },
+  {
+    num: '05',
+    tag: 'Consulting',
+    title: 'Digital Strategy',
+    desc: 'Developing comprehensive digital strategies aligned with your business goals. Navigating the complexities of the modern digital landscape.',
+    href: '',
+    tech: ['Strategy', 'Analytics', 'Planning'],
+  }
 ]
 
 const Services = () => {
