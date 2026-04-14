@@ -27,6 +27,16 @@ const projects = [
   {
     num: '02',
     category: 'Full Stack',
+    title: 'Job Management Portal (Collaborative)',
+    description: 'A job management and views portal for adding jobs (from employer), saving and applying for a job (job seeker) and overall admin management',
+    stack: [{name: 'PhP'}, {name: 'Tailwind'}],
+    image: '/assets/work/bliss-socially.png',
+    live: '#',
+    github: '#'
+  },
+  {
+    num: '03',
+    category: 'Full Stack',
     title: 'FB Like Social App',
     description: 'A Facebook-inspired social platform with authentication, image uploads, and database integration.',
     stack: [{ name: 'Next.js' }, { name: 'Clerk' }, { name: 'PostgreSQL' }, { name: 'Cloudinary' }],
@@ -35,7 +45,7 @@ const projects = [
     github: 'https://github.com/Blissmal/next-social-media-app',
   },
   {
-    num: '03',
+    num: '04',
     category: 'Frontend',
     title: 'React Firebase Chat',
     description: 'A real-time chat application with authentication, emoji support, image sharing, and user blocking.',
@@ -45,7 +55,7 @@ const projects = [
     github: 'https://github.com/Blissmal/react-firebaseChat',
   },
   {
-    num: '04',
+    num: '05',
     category: 'Full Stack',
     title: 'Ecommerce Application',
     description: 'A modern e-commerce platform with product variants, cart management, M-Pesa integration, and admin dashboard.',
@@ -55,7 +65,7 @@ const projects = [
     github: '#',
   },
   {
-    num: '05',
+    num: '06',
     category: 'Full Stack',
     title: 'Hire Purchase Ecommerce',
     description: 'A smartphone e-commerce platform with flexible hire purchase financing for the Kenyan market.',
