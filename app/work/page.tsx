@@ -30,7 +30,7 @@ const projects = [
     title: 'Job Management Portal (Collaborative)',
     description: 'A job management and views portal for adding jobs (from employer), saving and applying for a job (job seeker) and overall admin management',
     stack: [{name: 'PhP'}, {name: 'Tailwind'}],
-    image: '/assets/work/bliss-socially.png',
+    image: '/assets/work/php-jobs.jpeg',
     live: '#',
     github: '#'
   },
@@ -75,7 +75,7 @@ const projects = [
     github: '#',
   },
   {
-    num: '06',
+    num: '07',
     category: 'Mobile App',
     title: 'Chat App',
     description: 'A modern chat application with real-time messaging and user authentication.',
