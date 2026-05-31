@@ -10,52 +10,13 @@ import SwiperCore from 'swiper'
 import 'swiper/css'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { title } from 'process'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const projects = [
   {
     num: '01',
-    category: 'Full Stack',
-    title: 'Bliss Simple Socially',
-    description: 'A social app with authentication, post management, profile customization, and real-time chat features.',
-    stack: [{ name: 'Next.js' }, { name: 'Clerk' }, { name: 'React' }],
-    image: '/assets/work/bliss-socially.png',
-    live: 'https://bls-social-app.vercel.app',
-    github: 'https://github.com/Blissmal/social-app',
-  },
-  {
-    num: '02',
-    category: 'Full Stack',
-    title: 'Job Management Portal (Collaborative)',
-    description: 'A job management and views portal for adding jobs (from employer), saving and applying for a job (job seeker) and overall admin management',
-    stack: [{name: 'PhP'}, {name: 'Tailwind'}],
-    image: '/assets/work/php-jobs.jpeg',
-    live: '#',
-    github: '#'
-  },
-  {
-    num: '03',
-    category: 'Full Stack',
-    title: 'FB Like Social App',
-    description: 'A Facebook-inspired social platform with authentication, image uploads, and database integration.',
-    stack: [{ name: 'Next.js' }, { name: 'Clerk' }, { name: 'PostgreSQL' }, { name: 'Cloudinary' }],
-    image: '/assets/work/bliss-social.png',
-    live: 'https://bliss-social.vercel.app',
-    github: 'https://github.com/Blissmal/next-social-media-app',
-  },
-  {
-    num: '04',
-    category: 'Frontend',
-    title: 'React Firebase Chat',
-    description: 'A real-time chat application with authentication, emoji support, image sharing, and user blocking.',
-    stack: [{ name: 'React' }, { name: 'Firebase' }, { name: 'Firestore' }],
-    image: '/assets/work/firebaseChat.png',
-    live: 'https://bliss-firebase-chat.vercel.app',
-    github: 'https://github.com/Blissmal/react-firebaseChat',
-  },
-  {
-    num: '05',
     category: 'Full Stack',
     title: 'Ecommerce Application',
     description: 'A modern e-commerce platform with product variants, cart management, M-Pesa integration, and admin dashboard.',
@@ -65,7 +26,77 @@ const projects = [
     github: '#',
   },
   {
+    num: '02',
+    category: 'Full Stack',
+    title: 'Lash Beauty',
+    description: 'A modern lash service website with booking functionality and portfolio showcase.',
+    stack: [{ name: 'Next.js' }, { name: 'Tailwind CSS' }, { name: 'PostgreSQL' }, { name: 'Cloudinary' }],
+    image: '/assets/work/lash-site.png',
+    live: '#',
+    github: '#',
+  },
+  {
+    num: '03',
+    category: 'Full Stack',
+    title: 'Ecommerce Saas Application',
+    description: 'A multi-tenant e-commerce SaaS platform with customizable storefronts and integrated payment processing.',
+    stack: [{ name: 'Next.js' }, { name: 'TypeScript' }, { name: 'Mpesa Daraja' }, { name: 'Neon PostgreSQL' }],
+    image: '/assets/work/staging-saas.png',
+    live: '#',
+    github: '#',
+  },
+  {
+    num: '04',
+    category: 'Full Stack',
+    title: 'Car Dealership store',
+    description: 'A comprehensive car dealership platform featuring dynamic vehicle listings, advanced search filters, and a robust administrative panel for inventory management.',
+    stack: [{ name: 'Next.js' }, { name: 'Tailwind CSS' }, { name: 'PostgreSQL' }, { name: 'Cloudinary' }],
+    image: '/assets/work/car-dealership.png',
+    live: '#',
+    github: '#'
+  },
+  {
+    num: '05',
+    category: 'Full Stack',
+    title: 'Job Management Portal (Collaborative)',
+    description: 'A job management and views portal for adding jobs (from employer), saving and applying for a job (job seeker) and overall admin management',
+    stack: [{ name: 'PhP' }, { name: 'Tailwind' }],
+    image: '/assets/work/php-jobs.jpeg',
+    live: '#',
+    github: '#'
+  },
+  {
     num: '06',
+    category: 'Full Stack',
+    title: 'Bliss Simple Socially',
+    description: 'A social app with authentication, post management, profile customization, and real-time chat features.',
+    stack: [{ name: 'Next.js' }, { name: 'Clerk' }, { name: 'React' }],
+    image: '/assets/work/bliss-socially.png',
+    live: 'https://bls-social-app.vercel.app',
+    github: 'https://github.com/Blissmal/social-app',
+  },
+  {
+    num: '07',
+    category: 'Full Stack',
+    title: 'FB Like Social App',
+    description: 'A Facebook-inspired social platform with authentication, image uploads, and database integration.',
+    stack: [{ name: 'Next.js' }, { name: 'Clerk' }, { name: 'PostgreSQL' }, { name: 'Cloudinary' }],
+    image: '/assets/work/bliss-social.png',
+    live: 'https://bliss-social.vercel.app',
+    github: 'https://github.com/Blissmal/next-social-media-app',
+  },
+  {
+    num: '08',
+    category: 'Frontend',
+    title: 'React Firebase Chat',
+    description: 'A real-time chat application with authentication, emoji support, image sharing, and user blocking.',
+    stack: [{ name: 'React' }, { name: 'Firebase' }, { name: 'Firestore' }],
+    image: '/assets/work/firebaseChat.png',
+    live: 'https://bliss-firebase-chat.vercel.app',
+    github: 'https://github.com/Blissmal/react-firebaseChat',
+  },
+  {
+    num: '09',
     category: 'Full Stack',
     title: 'Hire Purchase Ecommerce',
     description: 'A smartphone e-commerce platform with flexible hire purchase financing for the Kenyan market.',
@@ -75,7 +106,7 @@ const projects = [
     github: '#',
   },
   {
-    num: '07',
+    num: '10',
     category: 'Mobile App',
     title: 'Chat App',
     description: 'A modern chat application with real-time messaging and user authentication.',
@@ -83,7 +114,7 @@ const projects = [
     image: '/assets/work/chat-app.jpeg',
     live: '#',
     github: '#',
-  }
+  },
 ]
 
 const Work = () => {
@@ -176,7 +207,7 @@ const Work = () => {
             <span className="text-accent">Work</span>
           </h1>
           <span className="text-xs tracking-[3px] uppercase text-white/25 hidden md:block">
-            {project.num} / 0{projects.length}
+            {project.num} / {projects.length < 10 ? `0${projects.length}` : projects.length}
           </span>
         </div>
 
