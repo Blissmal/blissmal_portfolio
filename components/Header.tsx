@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from 'react'
 import Nav from './Nav'
 import MobileNav from './MobileNav'
 import gsap from 'gsap'
+import CursorToggle from './CursorToggle'
 
 const Header = () => {
   const headerRef = useRef<HTMLElement>(null)
@@ -80,6 +81,7 @@ const Header = () => {
               <span className="relative z-10">Hire Me</span>
               <span className="absolute inset-0 bg-accent translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-300 ease-out" />
             </Link>
+            <CursorToggle />
           </div>
 
           {/* Mobile */}

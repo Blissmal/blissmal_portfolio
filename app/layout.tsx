@@ -4,7 +4,8 @@ import "./globals.css";
 import Header from "@/components/Header";
 import PageTransition from "@/components/PageTransition";
 import StairTransition from "@/components/StairTransition";
-import AnimatedCursor from "@/components/AnimatedCursor";
+import { CursorProvider } from "@/components/CursorContext";
+import ConditionalCursor from "@/components/ConditionalCursor";
 import ParticleBackground from "@/components/ParticleBackground";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -49,16 +50,17 @@ export default function RootLayout({
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <body className={`${JetBrainsMono.variable} antialiased`}>
-        {/* Global animated cursor — hidden on touch devices via CSS */}
-        <AnimatedCursor />
-        {/* Floating particle field */}
-        <ParticleBackground />
-        <Header />
-        <StairTransition />
-        <PageTransition>
-          {children}
-          <Toaster />
-        </PageTransition>
+        <CursorProvider>
+          <ConditionalCursor />
+          {/* Floating particle field */}
+          <ParticleBackground />
+          <Header />
+          <StairTransition />
+          <PageTransition>
+            {children}
+            <Toaster />
+          </PageTransition>
+        </CursorProvider>
       </body>
     </html>
   );
